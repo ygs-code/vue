@@ -20,9 +20,9 @@
 提取码：1fnu 
  
 
-我平时看源码中的小deom
+上面出了vue文件其他是我平时看源码中的小deom
 
-https://github.com/qq281113270/vue-ddf-
+ 
  
  
  作者：姚观寿
