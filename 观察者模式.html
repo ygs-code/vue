@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>The "Click the button" page</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<button id="addNewObserver">Add New Observer checkbox</button>
+<input id="mainCheckbox" type="checkbox"/>
+<div id="observersContainer"></div>
+<script type="text/javascript" >
+    /*
+     * Subject
+     * 内部创建了三个方法，内部维护了一个ObserverList。
+     */
+
+
+    //contructor function
+    function Subject(){
+        this.observers = new ObserverList();
+    }
+
+    //addObserver: 调用内部维护的ObserverList的add方法
+    Subject.prototype.addObserver = function( observer ){
+        this.observers.add( observer );
+    };
+
+    //removeObserver: 调用内部维护的ObserverList的removeat方法
+    Subject.prototype.removeObserver = function( observer ){
+        this.observers.removeAt( this.observers.indexOf( observer, 0 ) );
+    };
+
+
+    //notify: 通知函数，用于通知观察者并且执行update函数，update是一个实现接口的方法，是一个通知的触发方法。
+     //更新数据通知
+
+    Subject.prototype.notify = function( context ){
+        var observerCount = this.observers.count(); //获取长度
+
+        for(var i=0; i < observerCount; i++){
+            this.observers.get(i).update( context );
+        }
+    };
+
+    /*
+     * ObserverList
+     * 内部维护了一个数组，4个方法用于数组的操作，这里相关的内容还是属于subject，因为ObserverList的存在是为了将subject和内部维护的observers分离开来，清晰明了的作用。
+     */
+    function ObserverList(){
+        this.observerList = [];
+    }
+
+    //添加一个订阅数组
+    ObserverList.prototype.add = function( obj ){
+        return this.observerList.push( obj );
+    };
+   //计算长度
+    ObserverList.prototype.count = function(){
+        return this.observerList.length;
+    };
+
+    //获取数据
+    ObserverList.prototype.get = function( index ){
+        if( index > -1 && index < this.observerList.length ){
+            return this.observerList[ index ];
+        }
+    };
+
+    //获取索引
+    ObserverList.prototype.indexOf = function( obj, startIndex ){
+        var i = startIndex;
+
+        while( i < this.observerList.length ){
+            if( this.observerList[i] === obj ){
+                return i;
+            }
+            i++;
+        }
+
+        return -1;
+    };
+
+    //删除队列
+    ObserverList.prototype.removeAt = function( index ){
+        this.observerList.splice( index, 1 );
+    };
+
+    /*
+     * The Observer
+     * 提供更新接口，为想要得到通知消息的主体提供接口。
+     */
+    function Observer(){
+        this.update = function(){
+            // ...
+        };
+    }
+
+
+    // Extend an object with an extension
+    //合并继承
+    function extend( obj, extension ){
+        for ( var key in extension ){
+            obj[key] = extension[key];
+        }
+    }
+
+    // References to our DOM elements
+  //获取dom
+    var controlCheckbox = document.getElementById( "mainCheckbox" ),
+            addBtn = document.getElementById( "addNewObserver" ),
+            container = document.getElementById( "observersContainer" );
+
+
+    // Concrete Subject
+
+    // Extend the controlling checkbox with the Subject class
+    //把Subject 方法合并到节点controlCheckbox中
+    extend( controlCheckbox, new Subject() );
+
+    // Clicking the checkbox will trigger notifications to its observers
+    //点击选中的时候更新数据
+    controlCheckbox.onclick = function(){
+        controlCheckbox.notify( controlCheckbox.checked );
+    };
+
+    addBtn.onclick = addNewObserver;
+
+    // Concrete Observer
+    function addNewObserver(){
+        console.log('addNewObserver')
+        // Create a new checkbox to be added
+        var check = document.createElement( "input" );  //创建一个input
+        check.type = "checkbox";
+
+        // Extend the checkbox with the Observer class
+        //用观测器类扩展复选框
+        extend( check, new Observer() );
+
+        // Override with custom update behaviour
+        //用自定义更新行为重写
+        check.update = function( value ){
+            this.checked = value;
+        };
+
+        // Add the new observer to our list of observers  将新观察者添加到我们的观察者列表中
+        // for our main subject 对于我们的主体
+        //添加一个观察者数据 其实就是添加一个dom进去
+        controlCheckbox.addObserver( check );
+
+        // Append the item to the container
+        container.appendChild( check );
+    }
+
+
+//    var pubsub = {};
+//
+//    (function(myObject) {
+//
+//        // Storage for topics that can be broadcast
+//        // or listened to
+//        var topics = {};
+//
+//        // A topic identifier
+//        var subUid = -1;
+//
+//        // Publish or broadcast events of interest
+//        // with a specific topic name and arguments
+//        // such as the data to pass along
+//        myObject.publish = function( topic, args ) {
+//
+//            if ( !topics[topic] ) {
+//                return false;
+//            }
+//
+//            var subscribers = topics[topic],
+//                    len = subscribers ? subscribers.length : 0;
+//
+//            while (len--) {
+//                subscribers[len].func( topic, args );
+//            }
+//
+//            return this;
+//        };
+//
+//        // Subscribe to events of interest
+//        // with a specific topic name and a
+//        // callback function, to be executed
+//        // when the topic/event is observed
+//        myObject.subscribe = function( topic, func ) {
+//
+//            if (!topics[topic]) {
+//                topics[topic] = [];
+//            }
+//
+//            var token = ( ++subUid ).toString();
+//            topics[topic].push({
+//                token: token,
+//                func: func
+//            });
+//            return token;
+//        };
+//
+//        // Unsubscribe from a specific
+//        // topic, based on a tokenized reference
+//        // to the subscription
+//        myObject.unsubscribe = function( token ) {
+//            for ( var m in topics ) {
+//                if ( topics[m] ) {
+//                    for ( var i = 0, j = topics[m].length; i < j; i++ ) {
+//                        if ( topics[m][i].token === token ) {
+//                            topics[m].splice( i, 1 );
+//                            return token;
+//                        }
+//                    }
+//                }
+//            }
+//            return this;
+//        };
+//    }( pubsub ));
+//
+//    // A simple message logger that logs any topics and data received through our
+//    // subscriber
+//    var messageLogger = function ( topics, data ) {
+//        console.log( "Logging: " + topics + ": " + data );
+//    };
+//
+//
+//    // Subscribers listen for topics they have subscribed to and
+//    // invoke a callback function (e.g messageLogger) once a new
+//    // notification is broadcast on that topic
+//    var subscription = pubsub.subscribe( "inbox/newMessage", messageLogger );
+//
+//    // Publishers are in charge of publishing topics or notifications of
+//    // interest to the application. e.g:
+//
+//    pubsub.publish( "inbox/newMessage", "hello world!" );
+//
+//    // or
+//    pubsub.publish( "inbox/newMessage", ["test", "a", "b", "c"] );
+//
+//    // or
+//    pubsub.publish( "inbox/newMessage", {
+//        sender: "hello@google.com",
+//        body: "Hey again!"
+//    });
+//
+//    // We can also unsubscribe if we no longer wish for our subscribers
+//    // to be notified
+//    pubsub.unsubscribe( subscription );
+//
+//    // Once unsubscribed, this for example won't result in our
+//    // messageLogger being executed as the subscriber is
+//    // no longer listening
+//    pubsub.publish( "inbox/newMessage", "Hello! are you still there?" );
+</script>
+</body>
+</html>

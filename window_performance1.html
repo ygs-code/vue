@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
+</head>
+<body>
+  <script>
+   //   https://segmentfault.com/a/1190000002445735
+
+//      window.webkitPerformance : chrome6-9
+//      window.performance :  ie9 chrome10+
+      {
+
+          var perf =  window.performance||window.webkitPerformance;
+
+
+          /* istanbul ignore if */
+          if (
+              perf &&
+              perf.mark &&
+              perf.measure &&
+              perf.clearMarks &&
+              perf.clearMeasures
+          ) {
+              mark = function (tag) { return perf.mark(tag); };
+              measure = function (name, startTag, endTag) {
+                  perf.measure(name, startTag, endTag);
+                  perf.clearMarks(startTag);
+                  perf.clearMarks(endTag);
+                  perf.clearMeasures(name);
+              };
+          }
+      }
+      console.log(perf.mark)
+
+      console.log(mark('vue-perf-start1'))
+      console.log(measure)
+
+  </script>
+</body>
+</html>

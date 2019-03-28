@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      var vm= {
+          cid:2345234,
+          _isVue:true,
+          $options:{
+              _$options:'_$options'
+          },
+          options:{
+              name:'vue'
+
+          }
+      };
+      var options =
+              (typeof vm === 'function' && vm.cid != null) ?
+                                                              vm.options :
+                                                              (vm._isVue ?
+                                                                         vm.$options || vm.constructor.options
+                                                                         : vm || {});
+console.dir(options)
+  </script>
+</body>
+</html>

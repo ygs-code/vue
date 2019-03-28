@@ -1,0 +1,17 @@
+ <html>
+   <body>
+<script type="text/javascript">
+     /* istanbul ignore next */
+function isNative (Ctor) {
+
+  return typeof Ctor === 'function' && /native code/.test(Ctor.toString())
+}
+function code(){
+  var native='native codedsfgf'
+}
+console.log(typeof code === 'function')
+console.log( code.toString() )
+console.log(isNative(code))
+</script>
+   </body>
+ </html>

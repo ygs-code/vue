@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function wrapFilter(exp, filter) {
+        var i = filter.indexOf('('); //返回字符串第一次出现索引的位置
+        console.log('i='+i)
+        if (i < 0) {
+            // _f: resolveFilter
+            return ("_f(\"" + filter + "\")(" + exp + ")") //闭包
+        } else {
+            //name 是 从字符串开始到(结束的字符串,不包含(
+            var name = filter.slice(0, i); //截取字符串 arrayObject.slice(start,end)
+            console.log('==name==')
+            console.log(name)
+
+            //args是从(开始匹配，到字符串末端，不包含(
+            var args = filter.slice(i + 1); //如果 end 未被规定，那么 slice() 方法会选取从 start 到数组结尾的所有元素。
+            console.log('==args==')
+            console.log(args)
+            return (
+                    "_f(\"" + name + "\")(" + exp +
+                    (
+                            args !== ')' ?
+                                            ',' + args
+                                            : args
+                    )
+                   )
+        }
+    }
+    console.log(wrapFilter('abc','defg(hijk)'))
+</script>
+</body>
+</html>

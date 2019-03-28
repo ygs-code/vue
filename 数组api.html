@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var arr = [1,2,3,4,5,6,7,8,9,10];
+        arr.pop() //从数组中删除最后一个数组
+        arr.push(11); //从数组最后一个添加一个数字
+        arr.unshift(-1) //从数组前面添加一位数
+        arr.shift() //从数组前面删除一位
+    console.log(arr.splice(1,2)) //选中后的数组
+    console.log(arr) //被删除后的数组
+    console.log( arr.slice(1,4))//选中截取数组
+    console.log(arr.shift()) //删除数组中的第一个数据
+    console.log(arr.concat([1,2,3,4,5])) //链接拼接数组
+    console.log(arr.join(','))  //把数组才分成，变成字符串
+    console.log(arr.filter(item=>item>=4)); //数组过滤器
+    console.log(arr.every(item=>item>=-3)) //遍历数组每一条条件成功，才会返回成功状态
+    console.log(arr.some(item=>item>=10)) //遍历数组 只要有一个条件成功则返回true
+    console.log(arr.reduce((a,b)=>a+b)) //遍历数组 只要有一个条件成功则返回true
+    console.log(arr.find(item=>item>1)) //遍历数组 返回第一个条件满足的数组数据
+    console.log(arr.findIndex(item=>item>5)) //遍历数组 返回第一个条件为true的数组索引
+
+    for (let index of ['a', 'b'].keys()) { //获取数组key
+        console.log(index);
+        // 0
+        // 1
+    }
+
+    for (let elem of ['a', 'b'].values()) {
+        console.log(elem);
+        // 'a'
+        // 'b'
+    }
+
+    for (let [index, elem] of ['a', 'b'].entries()) {
+        console.log(index, elem);
+        // 0 "a"
+        // 1 "b"
+    }
+    //如果返回值大于等于1则是正序,a-b 也是正序， 小到大。如果是0 则是同级排序，如果是-1则是倒序，b-a, 大到小
+   console.log(arr.sort((a,b)=>{return b-a}));
+
+
+</script>
+</body>
+</html>

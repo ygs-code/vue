@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<script>
+    //https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/with
+//    不建议使用with语句，因为它可能是混淆错误和兼容性问题的根源。有关详细信息，请参阅下面“说明”一节中的“歧义对比”部分。
+//    with语句 扩展一个语句的作用域链。
+//    语法节
+//    with (expression) {
+//        statement
+//    }
+//    expression
+//    将给定的表达式添加到在评估语句时使用的作用域链上。表达式周围的括号是必需的。
+//    statement
+//    任何语句。要执行多个语句，请使用一个块语句 ({ ... })对这些语句进行分组。
+//性能方面的利与弊节
+//利：with语句可以在不造成性能损失的情況下，减少变量的长度。其造成的附加计算量很少。使用'with'可以减少不必要的指针路径解析运算。需要注意的是，很多情況下，也可以不使用with语句，而是使用一个临时变量来保存指针，来达到同样的效果。
+//
+//弊：with语句使得程序在查找变量值时，都是先在指定的对象中查找。所以那些本来不是这个对象的属性的变量，查找起来将会很慢。如果是在对性能要求较高的场合，'with'下面的statement语句中的变量，只应该包含这个指定对象的属性。
+//
+//语义不明的弊端节
+//弊端：with语句使得代码不易阅读，同时使得JavaScript编译器难以在作用域链上查找某个变量，难以决定应该在哪个对象上来取值。请看下面的例子：
+    var a={};
+    a.name='张三';a.sex='女';
+    console.log(a.name);
+    console.log(a.sex);
+    with(a){
+        console.log(name);
+        console.log(sex);
+    }
+</script>
+</body>
+</html>

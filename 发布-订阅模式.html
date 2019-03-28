@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+
+      var pubsub = {};
+
+      (function(myObject) {
+
+          // Storage for topics that can be broadcast 可以广播的主题的存储
+          // or listened to 或者听
+          var topics = {};
+
+          // A topic identifier 主题标识符
+          var subUid = -1;
+
+          // Publish or broadcast events of interest 发布或广播感兴趣的事件
+          // with a specific topic name and arguments   具有特定的主题名称和参数
+          // such as the data to pass along 如数据传递
+          myObject.publish = function( topic, args ) {
+
+              if ( !topics[topic] ) {
+                  return false;
+              }
+
+              var subscribers = topics[topic],
+                      len = subscribers ? subscribers.length : 0;
+
+              while (len--) {
+                  subscribers[len].func( topic, args );
+              }
+
+              return this;
+          };
+
+          // Subscribe to events of interest  订阅感兴趣的事件
+          // with a specific topic name and a 具有特定的主题名称和
+          // callback function, to be executed 回调函数，将被执行
+          // when the topic/event is observed 当观察到主题/事件时
+          myObject.subscribe = function( topic, func ) {
+
+              if (!topics[topic]) {
+                  topics[topic] = [];
+              }
+
+              var token = ( ++subUid ).toString();
+              topics[topic].push({
+                  token: token,
+                  func: func
+              });
+              return token;
+          };
+
+          // Unsubscribe from a specific 取消订阅
+          // topic, based on a tokenized reference 主题，基于标记化参考
+          // to the subscription 订阅
+          myObject.unsubscribe = function( token ) {
+              for ( var m in topics ) {
+                  if ( topics[m] ) {
+                      for ( var i = 0, j = topics[m].length; i < j; i++ ) {
+                          if ( topics[m][i].token === token ) {
+                              topics[m].splice( i, 1 );
+                              return token;
+                          }
+                      }
+                  }
+              }
+              return this;
+          };
+      }( pubsub ));
+
+      // A simple message logger that logs any topics and data received through our 一个简单的消息记录器，记录通过我们接收的任何主题和数据。
+      // subscriber 用户
+      var messageLogger = function ( topics, data ) {
+          console.log( "Logging: " + topics + ": " + data );
+      };
+
+
+      // Subscribers listen for topics they have subscribed to and 订阅者监听他们订阅的主题和
+      // invoke a callback function (e.g messageLogger) once a new 调用一个新的回调函数（例如MasigelgGER）
+      // notification is broadcast on that topic 这个主题广播通知
+      var subscription = pubsub.subscribe( "inbox/newMessage", messageLogger );
+
+      // Publishers are in charge of publishing topics or notifications of 出版商负责出版主题或通知。
+      // interest to the application. e.g: 对应用程序有兴趣。例如：
+
+      pubsub.publish( "inbox/newMessage", "hello world!" );
+
+      // or
+      pubsub.publish( "inbox/newMessage", ["test", "a", "b", "c"] );
+
+      // or
+      pubsub.publish( "inbox/newMessage", {
+          sender: "hello@google.com",
+          body: "Hey again!"
+      });
+
+      // We can also unsubscribe if we no longer wish for our subscribers   如果我们不再希望我们的订户，我们也可以退订。
+      // to be notified  被通知
+      pubsub.unsubscribe( subscription );
+
+      // Once unsubscribed, this for example won't result in our  一旦退订，这将不会导致我们的
+      // messageLogger being executed as the subscriber is MasaGelgGER作为订阅服务器执行
+      // no longer listening 不再听
+      pubsub.publish( "inbox/newMessage", "Hello! are you still there?" );
+  </script>
+</body>
+</html>

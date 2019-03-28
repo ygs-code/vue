@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <script>
+         var Vue=function () {
+              this.age=10;
+         }
+         Vue.prototype={
+
+         }
+
+         Vue.getAge=function () {
+              return this.age;
+         }
+         Vue.age=100;
+         console.log(Vue.getAge())
+   </script>
+</body>
+</html>
