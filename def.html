@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      var obj={
+          name:'name'
+      }
+      def(obj,'age',19);
+      console.log(obj);
+      var Observer = function Observer(value) {
+          this.value = value;
+          this.dep = new Dep();
+          this.vmCount = 0;
+          def(value, '__ob__', this);
+          if (Array.isArray(value)) {
+              var augment = hasProto
+                      ? protoAugment
+                      : copyAugment;
+              augment(value, arrayMethods, arrayKeys);
+              this.observeArray(value);
+          } else {
+              this.walk(value);
+          }
+      };
+
+
+      function def(obj, key, val, enumerable) {
+          Object.defineProperty(obj, key, {
+              value: val, //值
+              enumerable: !!enumerable,  //定义了对象的属性是否可以在 for...in 循环和 Object.keys() 中被枚举。
+              writable: true, //可以 改写 value
+              configurable: true  //configurable特性表示对象的属性是否可以被删除，以及除writable特性外的其他特性是否可以被修改。
+          });
+      }
+      Observer.prototype.observeArray = function observeArray(items) {
+          for (var i = 0, l = items.length; i < l; i++) {
+              observe(items[i]);
+          }
+      };
+
+      function observe(value, asRootData) {
+          if (!isObject(value) || value instanceof VNode) {
+              return
+          }
+          var ob;
+          if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
+              ob = value.__ob__;
+          } else if (
+                  observerState.shouldConvert &&
+                  !isServerRendering() &&
+                  (Array.isArray(value) || isPlainObject(value)) &&
+                  Object.isExtensible(value) &&
+                  !value._isVue
+          ) {
+              ob = new Observer(value);
+          }
+          if (asRootData && ob) {
+              ob.vmCount++;
+          }
+          return ob
+      }
+
+      var arrayProto = Array.prototype;
+      var arrayMethods = Object.create(arrayProto);
+
+      [
+          'push',
+          'pop',
+          'shift',
+          'unshift',
+          'splice',
+          'sort',
+          'reverse'
+      ].forEach(function (method) {
+          // cache original method 缓存原始方法
+
+          var original = arrayProto[method];
+          //第1个参数是obj
+          //第2个参数是key
+          //第3个参数是value
+          def(
+                  arrayMethods,
+                  method,
+                  function mutator() {
+                      console.log('mutator')
+                      var args = [], len = arguments.length;
+                      while (len--) args[len] = arguments[len];
+
+                      var result = original.apply(this, args);
+                      var ob = this.__ob__;
+                      console.log(this.__ob__)
+                      debugger;
+                      var inserted;
+                      switch (method) {
+                          case 'push':
+                          case 'unshift':
+                              inserted = args;
+                              break
+                          case 'splice':
+                              inserted = args.slice(2);
+                              break
+                      }
+                      if (inserted) {
+                          ob.observeArray(inserted);
+                      }
+                      // notify change
+                      ob.dep.notify();
+                      return result
+                  }
+          );
+      });
+
+      console.log(arrayProto)
+      console.log(arrayMethods)
+      console.log(arrayMethods.push('aa'))
+  </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function charCodeAt(exp) {
+        let c, i;
+        for (i = 0; i < exp.length; i++) {
+            c = exp.charCodeAt(i);
+            switch (c) {
+                case 0x22:
+                    console.log('c=' + c)
+                    console.log('0x22=' + exp[i])
+                    break                   // 匹配 "
+                case 0x27:
+                    console.log('c=' + c)
+                    console.log('0x27=' + exp[i])
+                    break                   // 匹配 '
+                case 0x60:
+                    console.log('c=' + c)
+                    console.log('0x60=' + exp[i])
+                    break                  // 匹配 `
+                case 0x28:
+                    console.log('c=' + c)
+                    console.log('0x28=' + exp[i])
+                    break                 // 匹配 (
+                case 0x29:
+                    console.log('c=' + c)
+                    console.log('0x29=' + exp[i])
+                    break                 //匹配  )
+                case 0x5B:
+                    console.log('c=' + c)
+                    console.log('0x5B=' + exp[i])
+                    break                // 匹配 [
+                case 0x5D:
+                    console.log('c=' + c)
+                    console.log('0x5D=' + exp[i])
+                    break                // 匹配 ]
+                case 0x7B:
+                    console.log('c=' + c)
+                    console.log('0x7B=' + exp[i])
+                    break                 // 匹配 {
+                case 0x7D:
+                    console.log('c=' + c)
+                    console.log('exp[i]=' + exp[i])
+                    break                 // }
+                case 0x5C:              //   匹配   \
+                    console.log('c=' + c)
+                    console.log('0x5C=' + exp[i])
+                    break
+                case 0x2f:              //   匹配   /
+                    console.log('c=' + c)
+                    console.log('0x5C=' + exp[i])
+                    break
+                case 0x7C:              //   匹配   pipe
+                    console.log('c=' + c)
+                    console.log('0x7C=' + exp[i])
+                        debugger;
+                    break
+
+
+            }
+        }
+
+    }
+
+    charCodeAt(`"'()[]{} '\\ \/ pipe`);
+</script>
+</body>
+</html>

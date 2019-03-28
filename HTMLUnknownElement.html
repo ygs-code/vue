@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <meta>
+    </head>
+    <body>
+        <script>
+            var el = document.createElement('add-options');
+            console.log(el);
+            console.log(window.HTMLUnknownElement);
+            console.log( window.HTMLElement);
+
+            console.log(el.constructor === window.HTMLUnknownElement ||
+                el.constructor === window.HTMLElement)
+               console.log(   /HTMLUnknownElement/.test('HTMLUnknownElement')  ); 
+
+        </script>
+    </body>
+</html>

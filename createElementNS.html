@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+
+<script>
+
+//    看用在何处，什么程序语言。
+//    顾名思义：
+//    NS 是 namespace 的意思
+//    createElementNS(ns,name) 通过 namespace 建立 单元
+//    参数1是 字符串，单元节点 的 namespace（命名空间） 名字
+//    参数2是 单元节点 的 名字
+//    createElement 建立 单元
+//    例如： createElement("div");
+//    var newDiv = document.createElement("div");
+
+//    createElementNS(ns,name) 方法创建带有命名空间的元素节点。 和createElement差不多
+//ns	字符串，可为元素节点规定命名空间的名称。
+//name	字符串，可为元素节点规定名称。
+
+        var   newel=document.createElementNS("div","abc");
+        var  newtext1=document.createTextNode("First");
+//        newel.appendChild(newtext1)
+        document.body.appendChild(newel)
+        console.dir(newel)
+        var  newe2=document.createElement("abc");
+        var  newtext2=document.createTextNode("First");
+//        newe2.appendChild(newtext2)
+        document.body.appendChild(newe2)
+        console.dir(newe2)
+
+</script>
+</body>
+</html>

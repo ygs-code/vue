@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script >
+
+    
+    function transformString(name) {
+        var argRE = /:(.*)$/; //匹配字符串是否含有:
+        var argMatch = name.match(argRE);  //匹配字符串是否含有:
+        let index =argMatch&&argMatch.index;
+        var arg = argMatch && argMatch[1];
+        console.log(argMatch)
+        console.log(arg)
+        if (arg) {
+            name = name.slice(0, -(arg.length + 1));
+        }
+        if (index) {
+            name = name.slice(0, index+ 1);
+        }
+        return name;
+    }
+    console.log(transformString('abc'))
+    console.log(transformString('abc:efg:hig'))
+
+</script>
+</body>
+</html>

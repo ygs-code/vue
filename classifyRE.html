@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<input id="input" type="text"  >
+    <script>
+        //非捕获  匹配不分组 。 就是可以包含，但是不匹配上
+
+//        var classifyRE = /(?:^|[-_])(\w)/g;
+//
+//        var classify = function (str) {
+//            return str.replace(classifyRE,
+//                function (c) {
+//                    return c.toUpperCase();
+//                }).replace(/[-_]/g, '');
+//        };
+
+//        console.log(classify(':'))
+//
+//     console.log(/^[a-zA-Z][\w-]*$/.test('-a5675675'))
+//        console.log(/^[a-zA-Z][\w-]*$/.test('a-5675675'))
+//        console.log(/^[\w]*$/.test('5675'))
+//
+//
+//        console.log(/([a-zA-Z])|(\d{1,2})/.test(100000))
+
+        var input = document.getElementById('input');
+
+        input.onkeyup=function () {
+            this.value=checkData(this.value)
+
+        }
+
+
+        function  checkData(string) {
+            var pattern1 = /([a-zA-Z]+)|([\u4e00-\u9fa5]+)/g;
+            var pattern2 =/^\d{1,2}$/;
+　　
+            if(!isNaN(new Number(string))&&pattern2.test(new Number(string))){
+　　　　　　　　console.log(new Number(string))
+                return new Number(string);
+            }
+
+            if (pattern1.test(string)){
+               return string
+
+            }
+
+
+           return '';
+        }
+
+
+
+        var camelizeRE = /-(\w)/g;  //匹配带-后缀的任何字符串
+        var camelize =  function (str) {
+            //替换字符串
+            return str.replace(camelizeRE, function (_, c) {
+                return c ? c.toUpperCase() : '';
+            })
+        }
+
+            console.log(camelize('ca-mel-ifffze'))
+
+
+
+    </script>
+</body>
+</html>

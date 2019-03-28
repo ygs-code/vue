@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<style>
+    .custom-appear-active{
+        /*color: red;*/
+        background: red;
+        transition: all 2s ease;
+    }
+    .custom-appear{
+        font-size: 40px;
+        /*color: #e069e2;*/
+        background: blue;
+    }
+    .custom-appear-to{
+        /*color: #e29138;*/
+        background: burlywood;
+    }
+</style>
+<body>
+<!--
+         关于appear的用法和enter的用法相似，它只是在第一次渲染的时候才会起作用。看完整的代码：
+    但是这里有一些问题：关于appear-class、 appear-to-class、 appear-active-class的相同属性那个起作用的问题。
+    四种情况：（与他们在style中的排列顺序有关系）
+    1、appear-class、 appear-to-class、 appear-active-class或者 appear-to-class、appear-class、 appear-active-class的排列顺序，此时只有appear-active-class的属性起作用。
+    2、appear-active-class、appear-class、 appear-to-class
+    此时appear-active-class的不起作用，由appear-class过渡到appear-to-class属性。
+    3、appear-class、appear-active-class、 appear-to-class
+    此时appear-class属性不起作用，由appear-active-class过渡到 appear-to-class属性。
+    4、 appear-to-class、 appear-active-class、appear-class
+    此时appear-to-class不起作用，由appear-class过渡到 appear-active-class属性。
+    enter也有相似的问题
+ -->
+<div id="app">
+    <transition
+            appear
+            appear-class="custom-appear"
+            appear-to-class="custom-appear-to"
+            appear-active-class="custom-appear-active"
+    >
+        <p>appear</p>
+    </transition>
+</div>
+<script>
+
+    new Vue({
+        el: "#app"
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <my-comp v-if="msg" :msg="msg"></my-comp>
+    <button @click="update">更新</button>
+    <button @click="uninstall">卸载</button>
+    <button @click="install">安装</button>
+</div>
+<script type="text/javascript">
+    Vue.component('button-counter', {
+
+
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        mounted: ()=> { //挂载元素，获取到DOM节点
+
+        },
+        template: '<button  v-hello="123">You clicked me   times.</button>'
+    })
+    Vue.directive('hello', {
+        bind: function (el){
+            console.log('bind:');
+        },
+        inserted: function (el){
+            console.log('inserted:');
+        },
+        update: function (el){
+            console.log('update:');
+        },
+        componentUpdated: function (el){
+            console.log('componentUpdated:');
+        },
+        unbind: function (el){
+            console.log('unbind:');
+        }
+    });
+
+    var myComp = {
+        template: '<button-counter >{{msg}}</button-counter>',
+        props: {
+            msg: String
+        }
+    }
+
+    new Vue({
+        el: '#app',
+        data: {
+            msg: 'Hello'
+        },
+        components: {
+            myComp: myComp
+        },
+        methods: {
+            update: function (){
+                this.msg = 'Hi';
+            },
+            uninstall: function (){
+                this.msg = '';
+            },
+            install: function (){
+                this.msg = 'Hello';
+            }
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+//      with 语句 为一个或一组语句指定默认对象。
+//      用法：with (<对象>) <语句>;
+//      with 语句通常用来缩短特定情形下必须写的代码量。在下面的例子中，请注意 Math 的重复使用：
+var x = Math.cos(3 * Math.PI) + Math.sin(Math.LN10);
+var y = Math.tan(14 * Math.E);
+console.log(x)
+console.log(y)
+with (Math) {
+   var x = cos(3 * PI) + sin(LN10);
+    var  y = tan(14 * E);
+    console.log(x)
+    console.log(y)
+}
+console.log(this)
+with (this) {
+    console.log(this)
+}
+function Person(){
+     this.name='yao'
+}
+var name = 'guan'
+with (new  Person()) { //绑定tis 但是如果声明有是私有变量优先使用私有变量。
+    var name='shou'
+    console.log(name)
+}
+  </script>
+</body>
+</html>

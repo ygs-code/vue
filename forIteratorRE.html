@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var forAliasRE = /([^]*?)\s+(?:in|of)\s+([^]*)/; //匹配 含有   字符串 in  字符串   或者  字符串 of  字符串
+    var forIteratorRE = /,([^,\}\]]*)(?:,([^,\}\]]*))?$/;
+    console.log('(value, key, index) in data'.match(forAliasRE));
+    console.log('value, key, index'.match(forIteratorRE));
+    console.log('( value, key, index)'.match(forIteratorRE));
+    console.log('[ value, key, index]'.match(forIteratorRE)); //匹配不上
+    console.log('{ value, key, index}'.match(forIteratorRE));//匹配不上
+</script>
+</body>
+</html>

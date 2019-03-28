@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<iframe src="https://www.baidu.com/"></iframe>
+  <script>
+      var channel = new MessageChannel();
+      var para = document.querySelector('p');
+
+      var ifr = document.querySelector('iframe');
+      var otherWindow = ifr.contentWindow;
+
+      ifr.addEventListener("load", iframeLoaded, false);
+
+      function iframeLoaded() {
+          otherWindow.postMessage('Hello from the main page!', '*', [channel.port2]);
+      }
+
+      channel.port1.onmessage = handleMessage;
+      function handleMessage(e) {
+          para.innerHTML = e.data;
+      }
+  </script>
+</body>
+</html>

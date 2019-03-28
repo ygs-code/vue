@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="demo"   >
+  <ul>
+      <li v-for="(item,index) in list">{{item}}</li>
+  </ul>
+
+</div>
+<style>
+    .class-a{
+        background: red;
+    }
+    .class-b{
+        background: red;
+    }
+</style>
+<script >
+
+    //创建一个vue的实例
+    new Vue({
+        el:"#demo",
+        data: {
+            classA:true,
+            list:[1,2,3,4,5,6,7,8],
+
+        },
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        mounted: ()=> { //挂载元素，获取到DOM节点
+
+        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+    })
+</script>
+
+</body>
+</html>

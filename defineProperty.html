@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      var obj={
+          name:'name'
+      }
+      function def(obj, key, val, enumerable) {
+
+          Object.defineProperty(obj, key, {
+              value: val, //值
+              enumerable: !!enumerable,  //定义了对象的属性是否可以在 for...in 循环和 Object.keys() 中被枚举。
+              writable: true, //可以 改写 value
+              configurable: true  //configurable特性表示对象的属性是否可以被删除，以及除writable特性外的其他特性是否可以被修改。
+          });
+      }
+      def(obj,'age', '29');
+      var property_name = Object.getOwnPropertyDescriptor(obj, 'name');
+      var property = Object.getOwnPropertyDescriptor(obj, 'age');
+      var _property = Object.getOwnPropertyNames(obj);
+      console.log(property_name);
+      console.log(property);
+      console.log(_property);
+
+
+
+  </script>
+</body>
+</html>

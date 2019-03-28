@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <script>
+        var obj={};
+        console.log(obj.__proto__)
+        obj.__proto__ = ['push', 'pop', 'shift', 'unshift', 'splice', 'sort', 'reverse']
+        console.log(obj.__proto__)
+   </script>
+</body>
+</html>

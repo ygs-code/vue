@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+
+</head>
+
+<div id="app">
+    <!--
+          1.在这里调用组件。
+          2.vue初始化实例配置项，挂载到#app,并调用了子组件（自定义组件first_component），通过在子组件内
+          提前定义props:['pass_c']接收它的父组件传下来的值,a是初始化vue实例配置项的变量， 这种方式就是组件解耦使用。
+    -->
+    <first_component :pass_c="a">
+
+    </first_component>
+
+    <div style="border:1px solid greenyellow;padding:20px">
+        <h2>is 与 :is 的用法 ,区别如下：</h2>
+        <div is="e"></div>
+        <div :is="f"></div>
+    </div>
+</div>
+
+<script>
+    var four_component = { // 自定义组件4
+        template:`<h2>:is -- 要在new Vue定义一个变量才能用 :is='f' 在#app 模板调用,否则报错 'undefined'</h2>`
+    }
+
+    var third_component = { // 自定义组件3
+        template:`<h2>is -- 要在components注册这个组件，才能用 is 引用second_component组件</h2>`
+    }
+
+    var second_component = { // 自定义组件2
+        template: `<div>
+                        <div>
+                                <del>{{ c }} </del> <br>
+                                <del>{{ pass_d }} </del>
+                        </div>
+                    </div>`,
+        data(){
+            return {
+                c: 'c_value come form second'
+            }
+        },
+        props:['pass_d']
+    }
+
+    var first_component = { // 自定义组件1
+        //注意这里template 最外层只能有一个div，不能出现并列两个div
+        template: `<div>
+                        <div style="border:1px solid red;padding:20px;">
+                                <h2 style="color:red;">first_component: </h2><b>{{ b }}</b><br><b>{{ pass_c }}</b>
+                        </div>
+                        <div style="border:1px solid green;padding:20px;">
+                                <h2 style="color:red;">second_component: </h2>
+                                <second_component :pass_d="d"></second_component>
+                        </div>
+                   </div>`, // 定义组件的模板
+        data(){ // 官方规定组件里的data必须是函数，才不会在同组件中相互干扰
+            return { // 返回的变量可以直接在该组件的template上使用
+                b:'b_value come from first',
+                d: 'd_value come from first'
+            }
+        },
+        props: ['pass_c'], // 用于接收其父组件的传值
+        components: { // 还可以调用子组件
+            second_component : second_component
+        }
+    }
+
+    new Vue({ // 实例化Vue
+        el:"#app", // 挂载到#app
+        components:{ //局部注册组件
+            first_component : first_component, // 一定要在实例上注册了才能在html文件中使用
+            e : third_component ,// 要在components注册这个组件，才能用is 引用 third_component 组件
+        },
+        data:{
+            a : 'a_value come from new Vue',
+            f : four_component  // 用:is 引用four_component组件，要预先定义f变量
+        }
+    })
+
+</script>
+</body>
+</html>

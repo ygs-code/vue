@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <script>
+          function  Person(name,age) {
+               this.name=name;
+               this.age=age;
+          }
+          Person.prototype={
+                 getAge:function () {
+                      return this.age;
+                 },
+                 getName:function () {
+                     return this.name;
+                 }
+          }
+    var ps= new Person('name',27);
+       console.log(Object.getOwnPropertyNames(ps))
+   </script>
+</body>
+</html>

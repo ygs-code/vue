@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var defaultTagRE = /\{\{((?:.|\n)+?)\}\}/g; //匹配viwe 视图中的{{指令}}
+    var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g; //匹配特殊符号  - 或者. 或者* 或者+ 或者? 或者^ 或者$ 或者{ 或者} 或者( 或者) 或者| 或者[ 或者] 或者/ 或者\
+
+
+    /*
+     * var aFn =  cached(function(string){
+     *
+     *      return string
+     *  })
+     * aFn(string1);
+     * aFn(string2);
+     * aFn(string);
+     * aFn(string1);
+     * aFn(string2);
+     *
+     * aFn 函数会多次调用 里面就能体现了
+     *  用对象去缓存记录函数
+     * */
+
+    function cached(fn) {
+        var cache = Object.create(null);
+        return (function cachedFn(str) {
+            var hit = cache[str];
+            return hit || (cache[str] = fn(str))
+        })
+    }
+
+    var buildRegex = cached(function (delimiters) {
+        var open = delimiters[0].replace(regexEscapeRE, '\\$&'); //$&	与 regexp 相匹配的子串。 这里的意思是遇到了特殊符号的时候在正则里面需要替换加多一个/斜杠
+        var close = delimiters[1].replace(regexEscapeRE, '\\$&');
+        return new RegExp(open + '((?:.|\\n)+?)' + close, 'g') // 匹配开始的open +任意字符或者换行符+ close 全局匹配
+    });
+//   console.log(buildRegex(['${','}']))
+//    console.log( 'abcdef${name},asdfsadf${age}'.match(buildRegex(['${','}'])));
+    var data={
+        name:'yao',
+        age:28,
+    }
+
+    let str = '姓名${name},年龄${age}'.replace(/\$\{((?:.|\\n)+?\})/g,function (val) {
+       let reg =  "(?<=\\{)[^\\}]+";  //匹配括号中的内容
+        return data[val.match(reg)[0]]
+    })
+    console.log(str)
+
+</script>
+</body>
+</html>

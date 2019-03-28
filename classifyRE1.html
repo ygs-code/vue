@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<input id="input" type="text"  >
+    <script>
+        var hyphenateRE = /\B([A-Z])/g;
+        var hyphenate = function (str) {
+            return str.replace(hyphenateRE, '-$1').toLowerCase()
+        } ;
+        console.log(hyphenate('Ab 56c w 7745 6e rt'))
+
+    </script>
+</body>
+</html>

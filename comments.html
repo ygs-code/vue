@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="vue.js"></script>
+<body>
+            <div id="version"></div>
+            <div id="app">
+                <!--this is comment-->
+                <p>Hello Vue!</p>
+            </div>
+            <p>渲染后HTML: </p>
+            <textarea id="code"></textarea>
+
+<script>
+    document.getElementById('version').innerHTML = 'Vue Version: ' + Vue.version;
+
+    new Vue({
+        el: '#app',
+        comments: true,
+        mounted() {
+            document.getElementById('code').innerHTML = this.$el.innerHTML;
+        }
+    });
+</script>
+</body>
+</html>

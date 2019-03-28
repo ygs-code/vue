@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      //只有函数声明才有效，函数表达式或者匿名函数匹配不上
+      function getType(fn) {
+          var match = fn && fn.toString().match(/^\s*function (\w+)/);
+          return match ? match[1] : ''
+      }
+      var ccde=function ccd (a,b,c) {
+
+      }
+      console.log(getType(true));
+      console.log(getType( ccde));
+      console.log(getType( function ccda (a,b,c) {
+
+      }));
+      console.log(getType('abc'));
+      console.log(getType([]));
+
+  </script>
+
+</body>
+</html>

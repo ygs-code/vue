@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function getShouldDecode(href) {
+      var   div =   document.createElement('div');
+        div.innerHTML = href ? "<a href=\"\n\"/>" : "<div a=\"\n\"/>";
+        //html里title属性换行的方法： &#10;  <div title="123& #10;456">text</div>
+        return div.innerHTML.indexOf('&#10;') > 0
+    }
+    console.log(getShouldDecode(false))
+    console.log(getShouldDecode(true))
+
+</script>
+</body>
+</html>

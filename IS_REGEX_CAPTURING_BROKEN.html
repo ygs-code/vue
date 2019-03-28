@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+</head>
+
+
+<script>
+    var IS_REGEX_CAPTURING_BROKEN = false;
+    'x'.replace(/x(.)?/g, function (m, g) {
+        console.log(g)
+        IS_REGEX_CAPTURING_BROKEN = g === '';
+    });
+    console.log(IS_REGEX_CAPTURING_BROKEN)
+</script>
+</body>
+</html>

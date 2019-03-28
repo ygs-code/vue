@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+//全局匹配代码：的时候会有个lastIndex 索引 所以可以循环 这样就可以匹配出多个
+    var reg=/(\w)l(\w)/g;
+    var str="hello world hello 123 hello programmer hello test";
+    var arr=reg.exec(str);
+    while(arr){
+        console.dir(arr);
+        console.log("lastIndex:"+reg.lastIndex);
+        arr=reg.exec(str);
+    }
+var reg2=/(\w)s(\w)/;
+var str2="ws1esr";
+var result=str2.match(reg2);
+console.log(result)
+debugger
+var i=0;
+while(result){
+    i++;
+    if(i<=4){
+        console.dir(result);
+        console.log("lastIndex:"+reg2.lastIndex);
+    }
+    else{
+        break;
+    }
+}
+</script>
+</body>
+</html>

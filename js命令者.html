@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button>按钮</button>
+<script>
+     var btn1 = document.querySelector('button');
+    // 发送者
+    var setCommond = function(button, fn) {
+        button.onclick = function() {
+            fn()
+        }
+    };
+    // 执行命令者
+    var menu = {
+        reFresh: function() {
+            console.log("刷新");
+        },
+        add: function() {
+            console.log("增加");
+        },
+        delete: function() {
+            console.log("删除");
+        }
+    };
+    // 命令对象
+    var commondObj = function(reciver) {
+        return function() {
+            reciver.reFresh();
+        }
+    };
+    var commondObj1 = commondObj(menu);
+    setCommond(btn1, commondObj1);
+</script>
+</body>
+</html>

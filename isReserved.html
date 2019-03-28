@@ -1,0 +1,19 @@
+<html>
+<head>
+    <meta>
+</head>
+<body>
+<script>
+
+    /**
+     * Check if a string starts with $ or _
+     * 检查一个字符串是否以$或者_开头
+     */
+    function isReserved(str) {
+        var c = (str + '').charCodeAt(0);
+        return c === 0x24 || c === 0x5F
+    }
+    console.log(isReserved('_aaa'))
+</script>
+</body>
+</html>

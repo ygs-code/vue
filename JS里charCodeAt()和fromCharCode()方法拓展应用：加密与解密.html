@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p><textarea id="text1" name="textfield" cols="50" rows="5">钱庄王员外这个人怎么样?</textarea></p>
+<input type="button" name="Button1" value="加密" onClick="text1.value = MySign.Encrypt(text1.value);">
+<input type="button" name="Button2" value="解密" onClick="text1.value = MySign.UnEncrypt(text1.value);">
+
+<script>
+    //    JS实现客户端的网页加密解密技术，可用作选择性隐蔽展示。当然客户端的加密安全度是不能与服务器相提并论，肯定不能用于密码这类内容的加密，但对于一般级别的内容用作展示已经够了。
+    //    JS加密与解密的解决方案有很多，本文则利用String对象的charCodeAt()方法和fromCharCode()方法对字符的ASCII编码进行获取和修改。
+    //    加密,解密代码：
+    var MySign = {
+        //加密/解密次数
+        num: 0,
+        //加密
+        Encrypt: function (Text) {
+            this.num = this.num + 1;
+            output = new String;
+            alterText = new Array();
+            varCost = new Array();
+            TextSize = Text.length;
+            for (i = 0; i < TextSize; i++) {
+                idea = Math.round(Math.random() * 111) + 77;
+                alterText[i] = Text.charCodeAt(i) + idea;
+                varCost[i] = idea;
+            }
+            for (i = 0; i < TextSize; i++) {
+                output += String.v(alterText[i], varCost[i]);
+            }
+            //text1.value = output;
+            return output;
+        },
+
+        //解密
+        UnEncrypt: function (Text) {
+            if (this.num > 0) {
+                this.num = this.num - 1;
+                output = new String;
+                alterText1 = new Array();
+                varCost1 = new Array();
+                TextSize = Text.length;
+                for (i = 0; i < TextSize; i++) {
+                    alterText[i] = Text.charCodeAt(i);
+                    varCost[i] = Text.charCodeAt(i + 1);
+                }
+                for (i = 0; i < TextSize; i = i + 2) {
+                    output += String.fromCharCode(alterText[i] - varCost[i]);
+                }
+                //text1.value = output;
+                return output;
+            }
+        }
+    };
+
+
+    //测试代码
+    var testString = "光头强，还不去砍树？";
+    console.log(testString);
+
+    var sign = MySign.Encrypt(testString); //凑妣o忕ｧ[還¬什³呯´硠S桲aﾁb
+    var sign2 = MySign.UnEncrypt(sign); //光头强，还不去砍树？
+
+    console.log(sign);
+    console.log(sign2);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<script >
+   let value = new Set();
+
+   value.add('11')
+    console.log(value)
+   //如果没有他自己写一个
+   _Set = (function () {
+       function Set() {
+           this.set = Object.create(null);
+       }
+
+       Set.prototype.has = function has(key) {
+           return this.set[key] === true
+       };
+       Set.prototype.add = function add(key) {
+           this.set[key] = true;
+       };
+       Set.prototype.clear = function clear() {
+           this.set = Object.create(null);
+       };
+
+       return Set;
+   }());
+
+   let _value = new _Set();
+
+   _value.add('11')
+   console.log(_value)
+</script>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="demo">
+
+    <ul>
+
+        <li   :class="[isClass?'class-a':'class-b']" v-if="index"   v-for="(item,index) in list"    v-userdefined >
+            <!--<img v-bind:src="item.url"/>-->
+            <input type="text" v-model="item.url">
+            <input type="checkbox" :value="index"  v-model="checkbox">
+        </li>
+    </ul>
+    <select v-model="select">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+
+    <base-input v-model="lovingVue"></base-input>
+    <!-- 我是注释节点，你好啊！ -->
+</div>
+<style>
+    .class-a {
+        background: red;
+    }
+
+    .class-b {
+        background: red;
+    }
+</style>
+<script>
+    // 注册一个全局自定义指令 `v-focus`
+    Vue.directive('userdefined', { //用户自定义指令
+        // 当被绑定的元素插入到 DOM 中时……
+        inserted: function (el) {
+            // 聚焦元素
+            el.addEventListener("click", function(){
+                alert(1)
+            });
+        }
+    })
+
+
+    //关键是在$emit('change', $event.target.checked)  change或者input 事件就是更新model事件
+    Vue.component('base-input', {
+        model: {
+            prop: 'text',
+            event: 'input' //或者 event: 'change' 都可以
+        },
+        props: {
+            text: String
+        },
+        template: `
+    <input
+      type="text"
+      v-bind:value="text"
+      v-on:input="$emit('input', $event.target.value)"
+    >
+  `
+    })
+
+
+    //创建一个vue的实例
+    new Vue({
+        el: "#demo",
+        comments:true,
+        data: {
+            isClass:true,
+            lovingVue:'123',
+            checkbox:['3'],
+//            checkbox:false,
+            select:3,
+            userDefined:'userDefined',
+            classA: true,
+            list: [
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:true,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+            ],
+
+        },
+        methods: {
+            clickEvent(){
+                console.log('clickEvent')
+            },
+            clickEvent1(){
+                console.log('clickEvent1')
+            }
+
+        },
+
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        mounted: function(){ //挂载元素，获取到DOM节点
+            console.log(this.lovingVue)
+            console.log(this.select)
+
+            setInterval(()=>{
+                console.log(this.lovingVue)
+            },1000)
+        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+    })
+</script>
+
+</body>
+</html>

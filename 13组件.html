@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+
+<div id="demo">
+    <i></i>
+    <span style="width: 100px;">
+
+              span 节点
+               {{isClass}}
+        </span>
+    <button-counter mgs="你好"></button-counter>
+
+</div>
+<style>
+    .class-a {
+        background: red;
+    }
+
+    .class-b {
+        background: red;
+    }
+</style>
+<script>
+    // 定义一个名为 button-counter 的新组件
+    Vue.component('button-counter', {
+        props:['mgs'],
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        template: '<button v-on:click="count++">You clicked me {{ count }} times.{{mgs}}</button>'
+    })
+
+
+    //创建一个vue的实例
+    new Vue({
+        el: "#demo",
+        comments:true,
+        data: {
+            classD:'classD',
+            classC:'classC',
+            isClass:true,
+            lovingVue:'123',
+            checkbox:['3'],
+//            checkbox:false,
+            select:3,
+            userDefined:'userDefined',
+            classA: true,
+            list: [
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:true,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+            ],
+
+        },
+        methods: {
+            clickEvent(){
+                console.log('clickEvent')
+            },
+            clickEvent1(){
+                console.log('clickEvent1')
+            }
+
+        },
+
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        mounted: function(){ //挂载元素，获取到DOM节点
+            console.log(this.lovingVue)
+            console.log(this.select)
+
+            setInterval(()=>{
+                console.log(this.lovingVue)
+            },1000)
+        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+    })
+</script>
+
+</body>
+</html>

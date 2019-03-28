@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+
+      //判断数据 是否不等于 undefined或者null
+      function isDef(v) {
+          return v !== undefined && v !== null
+      }
+      //判断数据 是否是undefined或者null
+      function isUndef(v) {
+          return v === undefined || v === null
+      }
+      function getHookArgumentsLength(fn) {
+          if (isUndef(fn)) {
+              return false
+          }
+          console.log(fn)
+          var invokerFns = fn.fns;
+
+          if (isDef(invokerFns)) {
+              console.log(invokerFns)
+              // invoker
+              return getHookArgumentsLength(
+                      Array.isArray(invokerFns) ?
+                              invokerFns[0] :
+                              invokerFns
+              )
+          } else {
+              console.log(fn.length)
+              debugger
+              return (fn._length || fn.length) > 1
+          }
+      }
+      /*
+      数据必须是这样才返回真，也可以是n层fns只要规律是一样嵌套下去就行
+      var fn1=[1,2,3,4];
+            var fn={
+                fns:[
+
+                        [1,2,3,45,34]
+
+              ]
+           }
+      var fn2={
+          fns:[
+              {
+                  fns:[
+                      {
+                          fns:[[1,2,3,45,9]]
+                      }
+                  ]
+              }
+          ]
+      }
+       */
+
+      console.log(getHookArgumentsLength(fn))
+  </script>
+</body>
+</html>

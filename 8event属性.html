@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="demo">
+    <ul>
+        <li v-for="(item,index) in list"    v-userdefined >
+            <!--<img v-bind:src="item.url"/>-->
+            <div></div>
+        </li>
+    </ul>
+
+</div>
+<style>
+    .class-a {
+        background: red;
+    }
+
+    .class-b {
+        background: red;
+    }
+</style>
+<script>
+    // 注册一个全局自定义指令 `v-focus`
+    Vue.directive('userdefined', { //用户自定义指令
+        // 当被绑定的元素插入到 DOM 中时……
+        inserted: function (el) {
+            // 聚焦元素
+            el.addEventListener("click", function(){
+                alert(1)
+            });
+        }
+    })
+
+    //创建一个vue的实例
+    new Vue({
+        el: "#demo",
+        data: {
+            userDefined:'userDefined',
+            classA: true,
+            list: [
+                {
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+            ],
+
+        },
+        methods: {
+            clickEvent(){
+                console.log('clickEvent')
+            },
+            clickEvent1(){
+                console.log('clickEvent1')
+            }
+
+        },
+
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        mounted: ()=> { //挂载元素，获取到DOM节点
+
+        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+    })
+</script>
+
+</body>
+</html>

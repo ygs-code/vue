@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    /**
+     * Create a cached version of a pure function.
+     */
+    /**
+     * Create a cached version of a pure function.
+     * 创建纯函数的缓存版本。
+     * 创建一个函数，缓存，再return 返回柯里化函数
+     * 闭包用法
+     */
+    /***********************************************************************************************
+     *函数名 ：cached
+     *函数功能描述 ： 创建纯函数的缓存版本。 创建一个函数，缓存，再return 返回柯里化函数 闭包用法
+     *函数参数 ： fn 函数
+     *函数返回值 ：    fn
+     *作者 ：
+     *函数创建日期 ：
+     *函数修改日期 ：
+     *修改人 ：
+     *修改原因 ：
+     *版本 ：
+     *历史版本 ：
+     ***********************************************************************************************/
+
+    /*
+     * var aFn =  cached(function(string){
+     *
+     *      return string
+     *  })
+     * aFn(string1);
+     * aFn(string2);
+     * aFn(string);
+     * aFn(string1);
+     * aFn(string2);
+     *
+     * aFn 函数会多次调用 里面就能体现了
+     *  用对象去缓存记录函数
+     * */
+
+    function cached(fn) {
+        var cache = Object.create(null);
+        return (function cachedFn(str) {
+            var hit = cache[str];
+            return hit || (cache[str] = fn(str))
+        })
+    }
+
+
+    /**
+     * Hyphenate a camelCase string.
+     * \B的用法
+     \B是非单词分界符，即可以查出是否包含某个字，如“ABCDEFGHIJK”中是否包含“BCDEFGHIJK”这个字。
+     */
+    var hyphenateRE = /\B([A-Z])/g;
+
+    var hyphenate = cached(function (str) {
+        //大写字母，加完减号又转成小写了 比如把驼峰 aBc 变成了 a-bc
+        //匹配大写字母并且两面不是空白的 替换成 '-' + '字母' 在全部转换成小写
+        return str.replace(hyphenateRE, '-$1').toLowerCase();
+    });
+    console.log('ABCDEFGHIJK'.match(hyphenateRE))
+
+    console.log(hyphenate('aBc'))
+
+</script>
+</body>
+</html>

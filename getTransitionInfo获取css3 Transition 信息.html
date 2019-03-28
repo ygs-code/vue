@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+    div
+    {
+        width:100px;
+        height:100px;
+        background:red;
+
+        background:-moz-linear-gradient(top,#fff,#F6D66E);
+        background:-webkit-linear-gradient(top,#fff,#F6D66E);
+        background:-o-linear-gradient(top,#fff,#F6D66E);
+        background:-ms-linear-gradient(top,#fff,#F6D66E);
+        background:linear-gradient(top,#fff,#F6D66E);
+        -moz-transform:translate(600px,450px);
+        -webkit-transform:translate(600px,450px);
+        -o-transform:translate(600px,450px);
+        -ms-transform:translate(600px,450px);
+        transform:translate(600px,450px);
+
+        -moz-animation:animations2 3s ease,animations 6s ease 3s, animations1 9s ease 3s;
+        -webkit-animation:animations2 3s ease,animations 6s ease 3s, animations1 9s ease 3s;
+        -o-animation:animations2 3s ease,animations 6s ease 3s, animations1 9s ease 3s;
+        -ms-animation:animations2 3s ease,animations 6s ease 3s, animations1 9s ease 3s;
+        animation:animations2 3s ease,animations 6s ease 3s, animations1 9s ease 3s;
+
+    }
+
+    @-webkit-keyframes animations{
+        0%{-webkit-transform:translate(0,0);}
+        55%{-webkit-transform:translate(480px,360px);}
+        100%{-webkit-transform:translate(600px,450px);}
+    }
+    @-moz-keyframes animations{
+        0%{-moz-transform:translate(0,0);}
+        55%{-moz-transform:translate(480px,360px);}
+        100%{-moz-transform:translate(600px,450px);}
+    }
+    @-o-keyframes animations{
+        0%{-o-transform:translate(0,0);}
+        55%{-o-transform:translate(480px,360px);}
+        100%{-o-transform:translate(600px,450px);}
+    }
+    @-ms-keyframes animations{
+        0%{-ms-transform:translate(0,0);}
+        55%{-ms-transform:translate(480px,360px);}
+        100%{-ms-transform:translate(600px,450px);}
+    }
+    @keyframes animations{
+        0%{transform:translate(0,0);}
+        55%{transform:translate(480px,360px);}
+        100%{transform:translate(600px,450px);}
+    }
+
+
+
+
+
+
+    @-webkit-keyframes animations1{
+        0%{-webkit-transform:translate(0,0);}
+        55%{-webkit-transform:translate(180px,160px);}
+        100%{-webkit-transform:translate(100px,150px);}
+    }
+    @-moz-keyframes animations1{
+        0%{-moz-transform:translate(0,0);}
+        55%{-webkit-transform:translate(180px,160px);}
+        100%{-webkit-transform:translate(100px,150px);}
+    }
+    @-o-keyframes animations1{
+        0%{-o-transform:translate(0,0);}
+        55%{-webkit-transform:translate(180px,160px);}
+        100%{-webkit-transform:translate(100px,150px);}
+    }
+    @-ms-keyframes animations1{
+        0%{-ms-transform:translate(0,0);}
+        55%{-webkit-transform:translate(180px,160px);}
+        100%{-webkit-transform:translate(100px,150px);}
+    }
+    @keyframes animations1{
+        0%{transform:translate(0,0);}
+        55%{-webkit-transform:translate(180px,160px);}
+        100%{-webkit-transform:translate(100px,150px);}
+    }
+
+
+
+
+
+
+
+    @-moz-keyframes animations2{
+        0%{-moz-transform:translate(0,0);}
+        100%{-moz-transform:translate(0,0);}
+    }
+    @-webkit-keyframes animations2{
+        0%{-webkit-transform:translate(0,0);}
+        100%{-webkit-transform:translate(0,0);}
+    }
+    @-o-keyframes animations2{
+        0%{-o-transform:translate(0,0);}
+        100%{-o-transform:translate(0,0);}
+    }
+    @-ms-keyframes animations2{
+        0%{-ms-transform:translate(0,0);}
+        100%{-ms-transform:translate(0,0);}
+    }
+    @keyframes animations2{
+        0%{transform:translate(0,0);}
+        100%{transform:translate(0,0);}
+
+
+</style>
+<div  id="div">
+
+</div>
+<div  id="div2">
+
+</div>
+  <script>
+      var inBrowser=true;
+      var isIE9=false;
+      var hasTransition = inBrowser && !isIE9;
+      var TRANSITION = 'transition';
+      var ANIMATION = 'animation';
+
+      // Transition property/event sniffing
+      var transitionProp = 'transition';
+      var transitionEndEvent = 'transitionend';
+      var animationProp = 'animation';
+      var animationEndEvent = 'animationend';
+      var transformRE = /\b(transform|all)(,|$)/;
+      function toMs(s) {
+          return Number(s.slice(0, -1)) * 1000
+      }
+
+      function getTimeout(
+                            delays, //延迟时间
+                            durations //执行的时间
+                          ) {
+          console.log(delays)
+          console.log(durations)
+          console.log(delays.length < durations.length)
+
+
+                              /* istanbul ignore next */
+                              while (delays.length < durations.length) {
+                                  delays = delays.concat(delays);
+                              }
+
+                         let max  = Math.max.apply(null, durations.map(function (d, i) {
+                                  return toMs(d) + toMs(delays[i])
+                              }))
+          console.log(max);
+
+          return max
+      }
+
+      //获取transition，或者animation 动画的类型，动画个数，动画执行时间
+      function getTransitionInfo(
+                                    el, //真实的dom
+                                    expectedType //动画类型
+                                      ) {
+          //  Window.getComputedStyle()方法返回一个对象，
+// 该对象在应用活动样式表并解析这些值可能包含的任何基本计算后报告元素的所有CSS属性的值
+// 私有的CSS属性值可以通过对象提供的API或通过简单地使用CSS属性名称进行索引来访问。
+          var styles = window.getComputedStyle(el); //
+          console.log('==styles==')
+          console.log(styles)
+//          var transitionProp = 'transition';
+          var transitionDelays = styles[transitionProp + 'Delay'].split(', '); //获取动画时间
+          var transitionDurations = styles[transitionProp + 'Duration'].split(', '); //获取动画时间
+          //transitionDelays=5s
+          var transitionTimeout = getTimeout(transitionDelays, transitionDurations);//获取动画时间
+          var animationDelays = styles[animationProp + 'Delay'].split(', ');//获取动画时间
+          var animationDurations = styles[animationProp + 'Duration'].split(', ');//获取动画时间
+          var animationTimeout = getTimeout(animationDelays, animationDurations); //获取动画时间
+          console.log('transitionDelays='+transitionDelays)
+          console.log('transitionDurations='+transitionDurations)
+          console.log('transitionTimeout='+transitionTimeout)
+          console.log('animationDelays='+animationDelays)
+          console.log('animationDurations='+animationDurations)
+          console.log('animationTimeout='+animationTimeout)
+
+
+          var type;  //动画类型
+          var timeout = 0; //动画时长
+          var propCount = 0; //动画个数
+          /* istanbul ignore if */
+          if (expectedType === TRANSITION) {// 判断动画是否是transition
+              if (transitionTimeout > 0) {
+                  type = TRANSITION;
+                  timeout = transitionTimeout;
+                  propCount = transitionDurations.length;
+              }
+          } else if (expectedType === ANIMATION) { //判断动画是否是animation
+              if (animationTimeout > 0) {
+                  type = ANIMATION;
+                  timeout = animationTimeout;
+                  propCount = animationDurations.length;
+              }
+          } else {
+              timeout = Math.max(transitionTimeout, animationTimeout);
+              type = timeout > 0
+                      ? transitionTimeout > animationTimeout
+                      ? TRANSITION
+                      : ANIMATION
+                      : null;
+              propCount = type
+                      ? type === TRANSITION
+                      ? transitionDurations.length
+                      : animationDurations.length
+                      : 0;
+          }
+          var hasTransform =
+                  type === TRANSITION &&
+                  transformRE.test(styles[transitionProp + 'Property']);
+          console.log(styles[transitionProp + 'Property']) //获取动画设置在哪些属性上面
+
+          return {
+              type: type,//过度或者css3动画类型
+              timeout: timeout, //执行动画的时长
+              propCount: propCount, //动画个数 执行多个动画
+              hasTransform: hasTransform //布尔值 是不是  transition 动画
+          }
+      }
+      console.log(getTransitionInfo(document.getElementById('div')))
+      document.getElementById('div').addEventListener('animations', function () {
+          debugger;
+           console.log('animations')
+      });
+
+
+  </script>
+</body>
+</html>

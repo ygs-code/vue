@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      /**
+       * Use function string name to check built-in types,
+       * because a simple equality check will fail when running
+       * across different vms / iframes.
+       * 检查函数是否是函数声明  如果是函数表达式或者匿名函数是匹配不上的
+       *
+       *
+       */
+      function getType(fn) {
+          var match = fn && fn.toString().match(/^\s*function (\w+)/);
+          return match ? match[1] : ''
+      }
+
+      //判断两个函数声明是否是相等
+      function isSameType(a, b) {
+          return getType(a) === getType(b)
+      }
+      //判断expectedTypes 中的函数和 type 函数是否有相等的如有有则返回索引index 如果没有则返回-1
+
+      function getTypeIndex(type, expectedTypes) {
+          //如果不是数组直接比较 如果真则返回0
+          if (!Array.isArray(expectedTypes)) {
+              return isSameType(expectedTypes, type) ? 0 : -1
+          }
+          for (var i = 0, len = expectedTypes.length; i < len; i++) {
+              //如果是数组则寻找索引
+              if (isSameType(expectedTypes[i], type)) {
+                  return i
+              }
+          }
+          return -1
+      }
+      //Boolean 传一个布尔值  但是 一般是函数或者数组函数才有意义，而且是函数声明的函数并不是 函数表达式prop.type 也需要是函数
+      //返回的是相同的索引  判断 属性类型定义的是否是Boolean
+      var booleanIndex = getTypeIndex(Boolean, Boolean);
+      var stringIndex = getTypeIndex(String, 'a');
+
+      console.log(booleanIndex)
+      console.log(stringIndex)
+
+  </script>
+</body>
+</html>

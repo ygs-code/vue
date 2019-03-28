@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+
+</head>
+<div id="x">
+    header
+    <my-component></my-component>
+    foot
+</div>
+<div id="x2">
+    header
+    <my-component inline-template>
+        <div>
+            <p> These are compiled as the component's own template</p>
+            <p> Not parent's transclusion content</p>
+            <p>{{message}}</p>
+        </div>
+    </my-component>
+    foot
+</div>
+
+<script>
+    var xx = new Vue({
+        el: "#x",
+        data: {
+            message: 444,
+        },
+        components: {
+            "my-component": {
+                data:function () {
+                    return    {
+                        message:'100'
+                    }
+                },
+                template: `<div>
+                  <p> These are compiled as the component's own template</p>
+                  <p> Not parent's transclusion content</p>
+                  <p> {{message}}</p>
+            </div>`
+            }
+        }
+    })
+    //这时可以使用内联模版
+    var xx = new Vue({
+        el: "#x2",
+        data:{
+            message: 'abc',
+        },
+        components: {
+            "my-component": {
+                data:function () { //组件只能用返回函数获取值
+                    return    {
+                        message:'100'
+                    }
+                },
+                template: `<div>
+                  <p> These are compiled as the component's own template</p>
+                  <p> Not parent's transclusion content</p>
+                  <p>{{message}}</p>
+            </div>`
+            }
+        }
+    })
+</script>
+</body>
+</html>

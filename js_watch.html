@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Title</title>
+</head>
+<body>
+<script>
+// 有兼容性问题通常来讲,你应该尽量避免使用 watch()和  unwatch() 这两个方法。因为只有 Gecko 实现了这两个方法，并且它们主要是为了在调试方便。另外，使用 watchpoint 对性能有严重的负面影响
+ var o = { p: 1 };
+
+ o.watch('p', function (id, oldval, newval) {
+  console.log('o.' + id + ' changed from ' + oldval + ' to ' + newval);
+  return newval;
+ });
+
+ o.p = 2;
+ o.p = 3;
+ delete o.p;
+ o.p = 4;
+
+ o.unwatch('p');
+ o.p = 5;
+</script>
+
+</body>
+</html>

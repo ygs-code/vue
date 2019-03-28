@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="components-demo">
+    <button-counter></button-counter>
+</div>
+<div id="app">
+    {{ message }}
+    <span v-once>This will never change: {{message}}</span>
+    <span v-if="(true||false)&&flag==1">This will never change: {{message}}</span>
+
+</div>
+
+<script>
+    //   function  person (){
+    //     this.options='aaa'
+    //   }
+    //
+    //   person.constructor={aa:'c'}
+    //   person.prototype.options='span'
+    //
+    //   console.log(person.constructor.options)
+    //  console.log(Object.create(person.constructor.options));
+    //    new Vue({})
+    var obj = {
+        name: 'name',
+        age: 29
+    }
+    var arr = []
+    var res = new Array(obj.length);
+
+    console.log(obj.length)
+    console.log(res)
+    console.log(arr.length)
+
+
+    Vue.component('button-counter', {
+        data: function () {
+            return {
+                count: 0
+            }
+        },
+        template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+    })
+
+    new Vue({el: '#components-demo'})
+
+    var app = new Vue({
+        el: '#app',
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        mounted: ()=> { //挂载元素，获取到DOM节点
+            setTimeout(()=>{
+                this.count=11;
+                console.log('this.count='+this.count)
+            },5000)
+        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+        data: {
+            flag:1,
+            count:0,
+            message: 'Hello Vue!'
+        }
+    })
+</script>
+
+</body>
+</html>

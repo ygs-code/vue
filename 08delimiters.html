@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+
+
+
+
+</head>
+<body>
+<div id="app">
+    {{ message }}
+</div>
+
+<div id="app1">
+    ${ message }
+</div>
+
+<script>
+
+
+    new Vue(
+            {
+                el:'#app',
+                data: {
+                    message: 'Hello'
+                },
+
+            })
+    new Vue(
+            {
+                el:'#app1',
+                data: {
+                    message: 'Hello'
+                },
+                delimiters:['${', '}']
+            })
+
+</script>
+
+</body>
+</html>

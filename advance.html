@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      var html ='<!--我是注释节点--><div>节点</div>';
+      var index=0;
+      //索引
+      function advance(n) {
+          index += n;
+          html = html.substring(n);
+          console.log(html)
+      }
+
+      console.log(html.length)
+      advance(13)
+
+
+  </script>
+</body>
+</html>

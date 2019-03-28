@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app">
+
+    <div :class="{'a':message}">
+        {{message}}
+    </div>
+
+</div>
+<script>
+    // 注册一个全局自定义指令 `v-focus`
+    Vue.directive('info', {
+        // 当被绑定的元素插入到 DOM 中时……
+        inserted: function (el) {
+
+            el.addEventListener('change',function () {
+                console.log(this.value)
+            },false)
+//            // 聚焦元素
+//            el.focus()
+        }
+    })
+    // 注册一个全局自定义指令 `v-focus`
+    Vue.directive('data', {
+        // 当被绑定的元素插入到 DOM 中时……
+        inserted: function (el) {
+
+            el.addEventListener('change',function () {
+                console.log(this.value)
+            },false)
+//            // 聚焦元素
+//            el.focus()
+        }
+    })
+
+    new Vue(
+            {
+                el:'#app',
+//                comments:true,
+                data: {
+                    message: 'Hello'
+                },
+                directives: {
+                    focus: {
+                        // 指令的定义
+                        inserted: function (el) {
+                            el.focus()
+                        }
+                    }
+                }
+
+            })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="demo">
+    {{message}}
+    <template></template>
+</div>
+<script >
+    //创建一个子组件
+    var Child=Vue.component("child-component",{
+       //_isComponent:true,
+        template:"<div>我是子组件 {{message}}</div>",
+        props: ['message'],
+    });
+    //创建一个父组件
+    Vue.component("parent-component",{
+         _isComponent:true,
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+        mounted:function () {
+           setTimeout(()=>{
+                this.message.push(1);
+           },1000)
+        },
+        template:"<div>{{message}}<child-component  :message='message'></child-component></div>", //注意元素模板只能有一个最上层元素，也就是用一个div包裹整个模板。
+        components:{"child-component":Child},//进行子组件关联，注意child-component需要引号。
+        data:function(){//组件中的data是一个函数
+            return {
+                message:[]
+            }
+        }
+    })
+    //创建一个vue的实例
+    new Vue({
+        el:"#demo",
+        data: {
+            message: 'Hello Vue!'
+        },
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+//        mounted: ()=> { //挂载元素，获取到DOM节点
+//
+//        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+    })
+</script>
+
+</body>
+</html>

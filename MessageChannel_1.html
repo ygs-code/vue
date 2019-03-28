@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    function random(min, max) {
+        return min + Math.floor((max - min + 1) * Math.random());
+    }
+
+     //实例化对象
+    var CalculatorChannel = new MessageChannel();
+
+    var newsOne = CalculatorChannel.port1; //端口1
+    var newsTow = CalculatorChannel.port2; //端口2
+
+
+    newsOne.onmessage = function(event) {
+        //console.log("port1收到来自port2的数据：" + event.data);
+        var d = event.data;
+        console.log('num1: ' + d.num1, 'num2: ' + d.num2);
+        var sum = d.num1 + d.num2;
+        //推送信息 更新  newsTow 推送信息 像消息体2推送信息
+         newsOne.postMessage(sum)
+    }
+
+
+
+    newsTow.onmessage = function(event) {
+        //console.log("port2收到来自port1的数据：" + event.data);
+        console.log('结果为：' + event.data);
+    }
+
+    // 生成数字
+    setInterval(() => {
+        //像 消息体 1 推送信息
+        newsTow.postMessage({
+            num1: random(1, 10),
+            num2: random(1, 10)
+        });
+    }, 1000);
+
+</script>
+</body>
+</html>

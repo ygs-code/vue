@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
+    var html="    class='classA' :html='abc' :class='[a?aa:bb,cc]'  style='width:100px' ></div>"
+    var index=0
+    function advance(n) {
+        index += n; //让索引叠加
+        html = html.substring(n); //截取当前索引 和 后面的字符串。
+    }
+    while (html){
+        var    attr = html.match(attribute)
+        advance(attr[0].length);
+        console.log(attr)
+    }
+
+</script>
+</body>
+</html>

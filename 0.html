@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+
+
+
+</head>
+<body>
+
+<div id="app">
+    <!--this is comment-->  {{ message }}
+</div>
+<div id="app1">
+    <div  >
+
+        <!--count={{count}}-->
+        <!--reversedCount={{reversedCount}}-->
+    </div>
+
+
+</div>
+
+
+<script>
+    console.log( Object.keys('abcd'))
+    debugger;
+    console.log('=====return 1=======')
+    console.log(   new Function('return 1'))
+
+    console.log('return='+ new Function(("return " + function () {
+                
+            })));
+
+
+
+    var app = new Vue({
+
+        el: '#app',
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        mounted: ()=> { //挂载元素，获取到DOM节点
+           setTimeout(()=>{
+//                this.count+=1;
+//                console.log('this.count='+this.count)
+           },1000)
+        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+       },
+        data:function () {
+             return  {
+                 count:0,
+
+                 message: 'Hello Vue!1111111'
+             }
+        },
+//        data: {
+//            count:0,
+//            message: 'Hello Vue!'
+//        }
+    })
+    var app1 = new Vue({
+        comments:true,
+        el: '#app1',
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        methods:{
+          click:function () {
+               console.log('点击事件')
+          }
+        },
+        mounted: function (){ //挂载元素，获取到DOM节点
+            setTimeout(()=>{
+                console.log(this.count)
+                this.count++;
+                console.log('this.count=')
+                console.log(this.count)
+            },1000)
+        },
+        computed: {
+            // 计算属性的 getter
+            reversedCount: function () {
+                // `this` 指向 vm 实例
+                return this.count++;
+            }
+        },
+
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+        data: {
+            count:0,
+
+            message: 'Hello Vue!2222'
+        }
+    })
+</script>
+
+</body>
+</html>

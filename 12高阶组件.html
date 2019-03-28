@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="app5">
+    <input v-model="query">
+    <my-transition :query="query" :list="list">
+        <li v-for="(item, index) in computedList"
+            :key="item.msg"
+            :data-index="index">
+            {{item.msg}}
+        </li>
+    </my-transition>
+    <script>
+        Vue.component('my-transition', {
+            functional:true,
+            render:function (h, ctx) {
+                var data = {
+                    props:{
+                        tag:'ul',
+                        css:false
+                    },
+                    on:{
+                        beforeEnter:function (el) {
+                            el.style.opacity = 0
+                            el.style.height = 0
+                        },
+                        enter:function (el, done) {
+                            var delay = el.dataset.index * 150
+                            setTimeout(function () {
+                                Velocity(el, {opacity:1, height:'1.6em'},{complete:done})
+                            }, delay)
+                        },
+                        leave:function (el, done) {
+                            var delay = el.dataset.index * 150
+                            setTimeout(function () {
+                                Velocity(el, {opacity:0, height:0}, {complete:done})
+                            }, delay)
+                        }
+                    }
+                }
+                return h('transition-group', data, ctx.children)
+            },
+            props:['query', 'list']
+        })
+
+        var app5 = new Vue({
+            el:'#app5',
+            data:{
+                query:'',
+                list:[
+                    {msg:'Bruce Lee'},
+                    {msg:'Jackie Chan'},
+                    {msg:'Chuck Norris'},
+                    {msg:'Jet Li'},
+                    {msg:'Kung Furry'},
+                    {msg:'Chain Zhang'},
+                    {msg:'Iris Zhao'},
+                ]
+            },
+            computed:{
+                computedList:function () {
+                    var vm = this
+                    return this.list.filter(function (item) {
+                        return item.msg.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1
+                    })
+                }
+            },
+        })
+    </script>
+</div>
+</body>
+</html>

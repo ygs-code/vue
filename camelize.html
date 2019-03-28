@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+ <script>
+     /**
+      * Camelize a hyphen-delimited string.
+      * 用连字符分隔的字符串。
+      * camelize = cachedFn(str)=>{ var hit = cache[str];
+    return hit || (cache[str] = fn(str))}
+
+      调用一个camelize 存一个建进来 调用两次 如果建一样就返回 hit
+      可以让这样的的属性 v-model 变成 vModel
+      */
+     var camelizeRE = /-(\w)/g;
+     var camelize = cached(function (str) {
+         return str.replace(camelizeRE, function (_, c) {
+             return c ? c.toUpperCase() : '';
+         })
+     });
+     /*
+      * var aFn =  cached(function(string){
+      *
+      *      return string
+      *  })
+      * aFn(string1);
+      * aFn(string2);
+      * aFn(string);
+      * aFn(string1);
+      * aFn(string2);
+      *
+      * aFn 函数会多次调用 里面就能体现了
+      *  用对象去缓存记录函数
+      * */
+
+     function cached(fn) {
+         var cache = Object.create(null);
+         return (function cachedFn(str) {
+             var hit = cache[str];
+             return hit || (cache[str] = fn(str))
+         })
+     }
+     console.log(camelize('abc-defg'))
+ </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+<div id="example">
+    <my-component  :msg="count" >
+
+    </my-component>
+</div>
+<script >
+
+    // 注册
+    Vue.component('my-component', {
+      //  _isComponent:true,
+        props: ['msg'],
+        template: '<div>{{msg}} A custom component!</div>'
+    })
+
+    // 创建根实例
+
+    var app = new Vue({
+        el: '#example',
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        mounted: function () {
+
+
+        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+        data: {
+            count:0,
+            message: 'Hello Vue!'
+        }
+    })
+</script>
+
+</body>
+</html>

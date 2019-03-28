@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body></body>
+</html>
+<script>
+    var lovingVue = 123;
+    var select = 3;
+    var isClass = true;
+
+    var _c = function (tag, astObject) {
+        debugger;
+        console.log(tag, astObject)
+    }
+    var _v = function (tag, astObject) {
+        debugger;
+        console.log(tag, astObject)
+    }
+    var _s = function (tag, astObject) {
+        debugger;
+        console.log(tag, astObject)
+    }
+
+
+    var fn=(function anonymous() {
+//        <div id="demo">
+//                <i></i>
+//                <span style="width: 100px;">
+//
+//                span 节点
+//        {{isClass}}
+//        </span>
+//
+//        </div>
+        with (this) {
+            return _c(
+                    'div',
+                    {attrs: {"id": "demo"}},
+                    [
+                        _c('i'),
+                        _v(" "),
+                        _c('span',
+                                {staticStyle: {"width": "100px"}},
+                                [
+                                    _v("\n\n              span 节点\n               " + _s(isClass) + "\n        ")
+                                ]
+                        )
+                    ]
+            )
+        }
+    })
+
+    fn()
+
+    (function anonymous() {
+//        <div id="demo">
+//                <span style="width: 100px;">
+//
+//                span 节点
+//        <i  :class="{'class-a':classA}">i标签</i>
+//                <b>{{lovingVue}}</b>
+//        </span>
+//        <span  style="width: 100px;">
+//
+//                {{select}}
+//        </span>
+//
+//        </div>
+        with (this) {
+            return _c(
+                    'div',
+                    {attrs: {"id": "demo"}},
+                    [
+                        _c(
+                                'span',
+                                {
+                                    staticStyle: {"width": "100px"}
+                                },
+                                [
+                                    _v("\n\n              span 节点\n              "),
+                                    _c(
+                                            'i',
+                                            {
+                                                class: {'class-a': classA}
+                                            },
+                                            [
+                                                _v("i标签")
+                                            ]
+                                    ),
+                                    _v(" ")
+                                    ,
+                                    _c(
+                                            'b',
+                                            [
+                                                _v(_s(lovingVue))
+                                            ]
+                                    )
+                                ]
+                        ),
+                        _v(" "),
+                        _c(
+                                'span',
+                                {
+                                    staticStyle: {"width": "100px"}
+                                },
+                                [
+                                    _v("\n\n              " + _s(select) + "\n        ")
+                                ]
+                        )
+                    ]
+            )
+        }
+    })
+
+</script>

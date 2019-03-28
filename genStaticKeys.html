@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      function genStaticKeys(modules) {
+           let arr =  modules.reduce(
+                  //reduce 累计相加api
+               function (keys, m) {
+                       console.log(m.staticKeys)
+                     return keys.concat(m.staticKeys || [])
+               }
+                ,[]
+          )
+          console.log(arr)
+         return  arr.join(',');
+      }
+      console.log(genStaticKeys([{ staticKeys:1},{staticKeys:2},{staticKeys:3}]) )
+  </script>
+</body>
+</html>

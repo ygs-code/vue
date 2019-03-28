@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Title</title>
+</head>
+<body>
+<script>
+ // 有兼容性问题通常来讲,你应该尽量避免使用 watch()和  unwatch() 这两个方法。因为只有 Gecko 实现了这两个方法，并且它们主要是为了在调试方便。另外，使用 watchpoint 对性能有严重的负面影响
+ Person = function(name,age) {
+  this.watch("age", Person.prototype._isValidAssignment);
+  this.watch("name", Person.prototype._isValidAssignment);
+  this.name = name;
+  this.age = age;
+ }
+
+ Person.prototype.toString = function() {
+  return this.name + ", " + this.age;
+ };
+
+ Person.prototype._isValidAssignment = function(id, oldval, newval) {
+  if (id === "name" && (!newval || newval.length > 30)) {
+   throw new RangeError("不合法的名字 " + this);
+  }
+  if (id === "age"  && (newval < 0 || newval > 200)) {
+   throw new RangeError("不合法的年龄 " + this);
+  }
+  return newval;
+ }
+
+ will = new Person("Will", 29);
+ print(will);   // Will, 29
+
+ try {
+  will.name = "";
+ } catch (e) {
+  //print(e);
+  console.log(e);
+ }
+
+ try {
+  will.age = -4;
+ } catch (e) {
+  console.log(e);
+ }
+</script>
+
+</body>
+</html>

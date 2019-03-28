@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+
+<div id="demo">
+       <i></i>
+        <span style="width: 100px;">
+
+              span 节点
+               {{isClass}}
+              {{number}}
+        </span>
+
+</div>
+<style>
+    .class-a {
+        background: red;
+    }
+
+    .class-b {
+        background: red;
+    }
+</style>
+<script>
+
+
+    //创建一个vue的实例
+    new Vue({
+        el: "#demo",
+        comments:true,
+        data: {
+            number:1,
+            classD:'classD',
+            classC:'classC',
+            isClass:true,
+            lovingVue:'123',
+            checkbox:['3'],
+//            checkbox:false,
+            select:3,
+            userDefined:'userDefined',
+            classA: true,
+            list: [
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:true,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+                {
+                    selected:false,
+                    url: 'http://i4.265g.com/images/201902/201902280644122663.jpg'
+                },
+            ],
+
+        },
+        methods: {
+            clickEvent(){
+                console.log('clickEvent')
+            },
+            clickEvent1(){
+                console.log('clickEvent1')
+            }
+
+        },
+
+        beforeCreate(){
+
+        },
+        created(){
+
+        },
+        beforeMount(){
+
+        },
+        mounted: function(){ //挂载元素，获取到DOM节点
+            console.log(this.lovingVue)
+            console.log(this.select)
+
+            setInterval(()=>{
+                this.number++
+                console.log(this.lovingVue)
+            },3000)
+        },
+        beforeUpdate(){
+
+        },
+        updated(){ //挂载元素，获取到DOM节点
+        },
+        beforeDestroy(){
+
+        },
+        destroyed(){
+
+        },
+    })
+</script>
+
+</body>
+</html>

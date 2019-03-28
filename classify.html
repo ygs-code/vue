@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <script>
+     var  classify = (function classifyRE() {
+           var classifyRE = /(?:^|[-_])(\w)/g;
+//非捕获  匹配不分组 。 就是可以包含，但是不匹配上
+           //过滤掉class中的 -_ 符号 并且把字母开头的改成大写
+         return  function (str) {
+               return str.replace(classifyRE,
+                       function (c) {
+                           return c.toUpperCase();
+                       }).replace(/[-_]/g, '');
+           };
+       })();
+       console.log(classify('abcd_efg-ijk'))
+
+   </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+
+<script >
+    var obj={
+         arr:[
+             {
+                 arr_1:[
+                     {a:1},
+                     {a:2},
+                     {a:3},
+                     {a:4},
+                     {a:5},
+
+                 ]
+             },
+             {
+                 arr_1:[
+                     {a:11},
+                     {a:12},
+                     {a:13},
+                     {a:14},
+                     {a:15},
+                 ]
+             },
+             {
+                 arr_1:[
+                     {a:21},
+                     {a:22},
+                     {a:23},
+                     {a:24},
+                     {a:25},
+                 ]
+             },
+             {
+                 arr_1:[
+                     {a:31},
+                     {a:32},
+                     {a:33},
+                     {a:34},
+                     {a:35},
+                 ]
+             },
+             {
+                 arr_1:[
+                     {a:41},
+                     {a:42},
+                     {a:43},
+                     {a:44},
+                     {a:45},
+                 ]
+             },
+             {
+                 arr_1:[
+                     {a:51},
+                     {a:52},
+                     {a:53},
+                     {a:54},
+                     {a:55},
+                 ]
+             },
+         ]
+    }
+    let newArr=obj.arr.map(item=>{
+      let arr= item.arr_1.map(_item=>{
+            return _item.a;
+        })
+        return arr.join(',')
+    })
+    console.log(newArr.join(',').split(','))
+    var arr1=[1,2,3,4,5];
+    arr1.length=3;
+    console.log(arr1)
+
+</script>
+
+</body>
+</html>

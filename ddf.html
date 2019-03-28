@@ -1,0 +1,72 @@
+<h3>Vue mvvm simple model</h3>
+<div id="app">
+    <h2 v-text="title"></h2>
+    <p v-text="name"></p>
+    <input v-model="name">
+</div>
+<script type="text/javascript">
+//function Vue(opt) {
+//  this.data = opt.data || {};
+//  this.$el = document.querySelector(opt.el) || document.body;
+//  var textDom = this.$el.querySelectorAll('[v-text]');
+//  var modelDom = this.$el.querySelectorAll('[v-model]');
+//  var self = this;
+//
+//  function observe(data) {
+//    // 设置开始和递归终止条件
+//    if (!data || typeof data !== 'object') {
+//      return;
+//    }
+//    // 不能直接使用for循环，避开闭包陷阱
+//    Object.keys(data).forEach(function (key) {
+//      defineReactive(data, key, data[key]);
+//    })
+//  }
+//
+//  function defineReactive(data, key, val) {
+//    observe(val);   // 递归对象属性到基本类型为止
+//    Object.defineProperty(data, key, {
+//      enumerable  : true,    // 枚举
+//      configurable: false, // 不可再配置
+//      get         : function () {
+//        return val;
+//      },
+//      set         : function (newVal) {
+//        if (val === newVal) {
+//          return;
+//        }
+//        val = newVal;  // setter本身已经做了赋值，val作为一个闭包变量，保存最新值
+//        model2View();
+//      },
+//    })
+//  }
+//
+//  function model2View() {
+//    textDom.forEach(function (node) {
+//      node.innerText = self.data[node.getAttribute('v-text')];
+//    });
+//  }
+//
+//  function watch() {
+//    modelDom.forEach(function (node) {
+//      //节点上面添加 key事件
+//      node.addEventListener('keyup', function () {
+//
+//        self.data[node.getAttribute('v-model')] = node.value;
+//      });
+//    });
+//  }
+//
+//  observe(this.data);
+//  model2View();
+//  watch();
+//}
+//
+//var vm = new Vue({
+//  el  : '#app',
+//  data: {
+//    name : 'Vue',
+//    title: 'Hello Vue!',
+//  },
+//});
+</script>
