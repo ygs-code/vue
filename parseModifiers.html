@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      var modifierRE = /\.[^.]+/g; // 匹配以点开头的分组 不属于点 data.object.info.age  匹配到 ['.object'，'.info' , '.age']
+
+      function parseModifiers(name) {
+          // 匹配以点开头的分组 不属于点 data.object.info.age  匹配到 ['.object'，'.info' , '.age']
+          var match = name.match(modifierRE);
+          console.log(match)
+          if (match) {
+              var ret = {};
+              match.forEach(function (m) {
+                  console.log(m)
+                  console.log(m.slice(1))
+                  ret[m.slice(1)] = true;
+              });
+              return ret
+          }
+      }
+
+      let name = 'data.props.name'
+      let modifiers = parseModifiers(name);
+      console.log(modifiers)
+      debugger
+      if (modifiers) {
+          name = name.replace(modifierRE, '');
+      }
+      console.log(name)
+
+
+  </script>
+</body>
+</html>

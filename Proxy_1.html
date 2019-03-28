@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      //Proxy 有两个参数，第一个是目标对象，第二个参数是设置Proxy的代理拦截方法
+      var obj = new Proxy({}, {
+          get: function (target, key, receiver) {
+              console.log(`getting ${key}!`);
+              return Reflect.get(target, key, receiver);
+          },
+          set: function (target, key, value, receiver) {
+              console.log(`setting ${key}!`);
+              return Reflect.set(target, key, value, receiver);
+          }
+      });
+      obj.count = 1;
+      obj.count
+      //  setting count!
+//      ++obj.count
+  </script>
+</body>
+</html>

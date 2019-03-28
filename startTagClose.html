@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var html='   /> '
+    var html1='   > '
+    var startTagClose = /^\s*(\/?)>/; //   匹配 > 标签 或者/>
+    var end = html.match(startTagClose);
+  console.log(end)
+    var end1 = html1.match(startTagClose);
+    console.log(end1)
+</script>
+</body>
+</html>

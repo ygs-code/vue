@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var queue={
+        name:'abc',
+        age:19,
+        vm:{
+            _watcher:{}
+        },
+    }
+    queue.vm._watcher=queue;
+    var watcher = queue;
+    var vm = watcher.vm; //获取到虚拟dom
+    if (vm._watcher === watcher) { //判断watcher与vm._watcher 相等
+          alert(1)
+    }
+
+</script>
+</body>
+</html>

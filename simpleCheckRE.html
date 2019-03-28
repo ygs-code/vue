@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+   //检测数据类型
+   var simpleCheckRE = /^(String|Number|Boolean|Function|Symbol)$/;
+
+
+   //检查函数是否是函数声明  如果是函数表达式或者匿名函数是匹配不上的
+    function getType(fn) {
+        var match = fn && fn.toString().match(/^\s*function (\w+)/);
+        console.log('match')
+        console.log(match)
+        return match ? match[1] : ''
+    }
+
+   //getType检查函数是否是函数声明  如果是函数表达式或者匿名函数是匹配不上的
+   var expectedType = getType(12);
+   var expectedType1 = getType(12);
+   var expectedType2 = getType(12);
+   var expectedType3 = getType(12);
+
+
+   //检测改函数是什么类型
+   console.log(simpleCheckRE.test(expectedType))
+   console.log(simpleCheckRE.test(expectedType1))
+   console.log(simpleCheckRE.test(expectedType2))
+   console.log(simpleCheckRE.test(expectedType3))
+   console.log(simpleCheckRE.test(expectedType4))
+
+
+//   console.log(simpleCheckRE.test('Array') )
+//   console.log(simpleCheckRE.test('Number') )
+//   console.log(simpleCheckRE.test('String') )
+
+
+
+
+
+</script>
+</body>
+</html>

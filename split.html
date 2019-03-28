@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      var arrStr=['st ig ood shit gonging good shit gonging good' ,'play admin office friend,quick ready thank yellow'];
+      arrStr = arrStr.map(item=>{
+          var  itemArrStr = item.split(' ');
+          let length = 0;
+          let str = ''
+          for(let index=0;index<itemArrStr.length;index++){
+              length+=itemArrStr[index].length+1;
+              if(length>15){
+                 length=0;
+                 str +='<br/>'+itemArrStr[index]+' ';
+              }else{
+                  str +=itemArrStr[index]+' ';
+              }
+
+          }
+          length=length-1;
+          console.log(length);
+          console.log(str);
+          return str
+
+      })
+
+console.log('st ig ood shit'.length)
+      console.log(arrStr)
+  </script>
+</body>
+</html>

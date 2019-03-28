@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+<head>
+
+
+</head>
+
+
+<body>
+<script type="text/javascript">
+    function toUnicodeFun(data){
+        if(data == '' || typeof data == 'undefined') return '请输入汉字';
+        var str ='';
+        for(var i=0;i<data.length;i++){
+            str+="\\u"+data.charCodeAt(i).toString(16);
+        }
+        return str;
+    }
+
+    var resultUnicode = toUnicodeFun('中国'); // \u4e2d\u56fd
+    console.log(resultUnicode);
+
+
+    function toChineseWords(data){
+        if(data == '' || typeof data == 'undefined') return '请输入十六进制unicode';
+        data = data.split("\\u");
+        var str ='';
+        for(var i=0;i<data.length;i++){
+            str+=String.fromCharCode(parseInt(data[i],16).toString(10));
+        }
+        return str;
+    }
+
+    var resultChineseWords = toChineseWords("\u4e2d\u56fd");
+    console.log(resultChineseWords);//中国
+    document.write(String.fromCharCode(0x7C))
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+//    3.方法
+//    通常对于一个正则对象来讲，我们能够使用的方法基本上有三个，即regObj.test,regObj.exec及regObj.compile
+    var stripStringRE = /'(?:[^'\\]|\\.)*'  |   "(?:[^"\\]|\\.)*"  |  `(?:[^`\\]|\\.)* \$\{|\}(?:[^`\\]|\\.)*`  |  `(?:[^`\\]|\\.)*`  /g;
+    var str = '".1234134 as d 54sdf 353.:a$24 ads5`'
+
+//'([^'\\]|\\.)*'　''内的若干字符
+//|
+//"([^"\\]|\\.)*" ""内的若干字符
+//|
+// `(?:[^`\\]|\\.)* \$\{|\}(?:[^`\\]|\\.)*`  `字符和${字符}和字符`
+//|
+//`([^`\\]|\\.)*`　`和`之间的若干字符
+
+
+
+
+    console.log(stripStringRE.test(str));
+    console.log(stripStringRE.exec(str));
+    console.log(str.match(stripStringRE));
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+
+    var str='1abcde2abcde3abcde4abcde5abcde6abcde7abcde'
+    var reg = /(abc)/;
+
+   function getPrevString(reg,str,getPrevStrArr) {
+       getPrevStrArr=getPrevStrArr||[];
+       var regStr = reg.exec(str);
+       var arrStr = str.match(reg);
+       console.log(regStr)
+       console.log(arrStr)
+       if(arrStr&&arrStr.length>=1){
+           getPrevStrArr.push(str.charAt(regStr.index-1));
+           str=str.replace(reg,'');
+           console.log(str)
+           arrStr.pop();
+//           setTimeout(()=>{
+               getPrevStrArr.concat(getPrevString(reg,str,getPrevStrArr));
+//           },500)
+
+       }
+       return getPrevStrArr;
+   }
+
+
+    console.log(getPrevString(reg,str));
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /**
+     * Parse a v-model expression into a base path and a final key segment.
+     * Handles both dot-path and possible square brackets.
+     * 将v-model表达式解析为基路径和最后一个键段。
+     *处理点路径和可能的方括号。
+     *
+     * Possible cases:
+     * 可能的情况下:
+     *
+     * - test
+     * - test[key]
+     * - test[test1[key]]
+     * - test["a"][key]
+     * - xxx.test[a[a].test1[key]]
+     * - test.xxx.a["asa"][test1[key]]
+     *
+     */
+
+    var len; //字符串长度
+    var str; //字符串
+    var chr; //字符串的编码
+    var index$1; //循环的索引
+    var expressionPos; //匹配到   符号 [ 的开始索引
+    var expressionEndPos; // 如果匹配上一对 [] 的时候就跳出循环  则是匹配
+
+
+    function parseModel(val) {
+        // Fix https://github.com/vuejs/vue/pull/7730
+        // allow v-model="obj.val " (trailing whitespace)
+        val = val.trim(); //值
+        len = val.length; //获取长度
+        //lastIndexOf 方法可返回一个指定的字符串值最后出现的位置
+        if (
+                val.indexOf('[') < 0 || //这个字符串没有出现过[
+                val.lastIndexOf(']') < len - 1 //这个字符串 没有出现过]这个符号  或者是出现位置不是在最后一位的时候
+        ) {
+            index$1 = val.lastIndexOf('.'); //获取最后一位出现 . 的位置
+            if (index$1 > -1) { //说明有点.
+                return {
+                    exp: val.slice(0, index$1), //丢弃最后一位 比如data.object.info.age获取data.object.info
+                    key: '"' + val.slice(index$1 + 1) + '"' //获取最后一位 age
+                }
+            } else {
+                return {
+                    exp: val, //如果没有点 则只有一个值
+                    key: null
+                }
+            }
+        }
+
+        str = val;
+        index$1 = expressionPos = expressionEndPos = 0;
+        // 索引和字符串长度比较 如果索引大于或者等于字符串的时候返回真
+        //看到这
+        while (!eof()) { //循环获取字符串的编码 直到把字符编码循环完
+            //获取字符串的编码
+            chr = next();
+            /* istanbul ignore if */
+
+            if (isStringStart(chr)) { //如果是 " 或者 ' 的时候返回真
+                parseString(chr); //循环匹配一对''或者""符号
+            } else if (chr === 0x5B) { // 符号 [
+                //检测 匹配[] 一对这样的=括号
+                parseBracket(chr);
+            }
+        }
+
+        return {
+            exp: val.slice(0, expressionPos),
+            key: val.slice(expressionPos + 1, expressionEndPos)
+        }
+    }
+
+    //索引加加 获取字符串的编码
+    function next() {
+        //charCodeAt() 方法可返回指定位置的字符的 Unicode 编码。这个返回值是 0 - 65535 之间的整数。
+        return str.charCodeAt(++index$1)
+    }
+
+    // 索引和字符串长度比较 如果索引大于或者等于字符串的时候返回真
+    function eof() {
+        //索引和字符串长度比较
+        return index$1 >= len
+    }
+
+    //如果是 " 或者 ' 的时候返回真
+    function isStringStart(chr) {
+        //    "              '
+        return chr === 0x22 || chr === 0x27
+    }
+
+    //检测 匹配[] 一对这样的=括号
+    function parseBracket(chr) {
+        var inBracket = 1;
+        expressionPos = index$1;
+        while (!eof()) {
+            chr = next();
+            if (isStringStart(chr)) { //如果是 " 或者 ' 的时候返回真
+                parseString(chr); //循环匹配一对''或者""符号
+                continue
+            }
+            if (chr === 0x5B) { // 匹配上
+                inBracket++;
+            }
+            if (chr === 0x5D) {  //匹配上 ]
+                inBracket--;
+            }
+            if (inBracket === 0) {  //如果匹配上一对 [] 的时候就跳出循环
+                expressionEndPos = index$1;
+                break
+            }
+        }
+    }
+    //循环匹配一对''或者""符号
+    function parseString(chr) {
+        var stringQuote = chr; //记录当前的'或者"
+        while (!eof()) {
+            chr = next();
+            if (chr === stringQuote) {  //当他们匹配上一对的时候退出循环
+                break
+            }
+        }
+    }
+    console.log(parseModel('object'))
+    console.log(parseModel('object[info][name]'))
+    console.log(parseModel('object.info.name'))
+    console.log(parseModel('test[key]'))
+    console.log(parseModel('test[test1[key]]'))
+    console.log(parseModel('test["a"][key]'))
+    console.log(parseModel('xxx.test[a[a].test1[key]]'))
+    console.log(parseModel('test.xxx.a["asa"][test1[key]]'))
+</script>
+</body>
+</html>

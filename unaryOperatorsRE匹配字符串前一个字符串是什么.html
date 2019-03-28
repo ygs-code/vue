@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+
+    //没有全局匹配 只会匹配到一个
+    var unaryOperatorsRE = new RegExp('\\b' + (
+                    'delete,typeof,void'
+            ).split(',').join('\\s*\\([^\\)]*\\)|\\b') + '\\s*\\([^\\)]*\\)','g');
+
+
+    /delete\s*\([^\)]*\)|typeof\s*\([^\)]*\)|void\s*\([^\)]*\)/
+    var str = '$delete  (aa)  typeof  (aa)'
+
+
+
+
+
+    console.log(unaryOperatorsRE)
+    console.log(unaryOperatorsRE.test(str));
+    console.log(unaryOperatorsRE.exec(str));
+
+    var regStr =str.match(unaryOperatorsRE);
+
+    console.log(str.match(unaryOperatorsRE));
+//    console.log(unaryOperatorsRE.exec(str).index-1);
+    console.log(str[unaryOperatorsRE.exec(str).index-1])
+
+</script>
+</body>
+</html>

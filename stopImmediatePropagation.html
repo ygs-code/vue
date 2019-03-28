@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<title>Title</title>
+<head>
+    <style>
+        p { height: 30px; width: 150px; background-color: #ccf; }
+        div {height: 30px; width: 150px; background-color: #cfc; }
+    </style>
+</head>
+<body>
+<div>
+    <p>paragraph</p>
+</div>
+<script>
+    const p = document.querySelector('p')
+    p.addEventListener("click", (event) => {
+        alert("我是p元素上被绑定的第一个监听函数");
+    }, false);
+
+    p.addEventListener("click", (event) => {
+        alert("我是p元素上被绑定的第二个监听函数");
+        event.stopImmediatePropagation();
+        // 执行stopImmediatePropagation方法,阻止click事件冒泡,并且阻止p元素上绑定的其他click事件的事件监听函数的执行.
+    }, false);
+
+    p.addEventListener("click",(event) => {
+        alert("我是p元素上被绑定的第三个监听函数");
+        // 该监听函数排在上个函数后面，该函数不会被执行
+    }, false);
+
+    document.querySelector("div").addEventListener("click", (event) => {
+        alert("我是div元素,我是p元素的上层元素");
+        // p元素的click事件没有向上冒泡，该函数不会被执行
+    }, false);
+</script>
+</body>
+</html>

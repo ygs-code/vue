@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var componentVNodeHooks = {
+        init: function init(
+                vnode, //vonde虚拟dom
+                hydrating,
+                parentElm,
+                refElm) {
+            if (
+                    vnode.componentInstance && !vnode.componentInstance._isDestroyed &&
+                    vnode.data.keepAlive
+            ) {
+                // kept-alive components, treat as a patch
+                var mountedNode = vnode; // work around flow
+
+            } else {
+
+            }
+        },
+
+        prepatch: function prepatch(oldVnode, vnode) {
+            var options = vnode.componentOptions;
+            var child = vnode.componentInstance = oldVnode.componentInstance;
+
+        },
+
+        insert: function insert(vnode) {
+            var context = vnode.context;
+            var componentInstance = vnode.componentInstance;
+            if (!componentInstance._isMounted) {
+                componentInstance._isMounted = true;
+                callHook(componentInstance, 'mounted');
+            }
+            if (vnode.data.keepAlive) {
+                if (context._isMounted) {
+                    // vue-router#1212
+                    // During updates, a kept-alive component's child components may
+                    // change, so directly walking the tree here may call activated hooks
+                    // on incorrect children. Instead we push them into a queue which will
+                    // be processed after the whole patch process ended.
+
+                } else {
+
+                }
+            }
+        },
+
+        destroy: function destroy(vnode) {
+            var componentInstance = vnode.componentInstance;
+            if (!componentInstance._isDestroyed) {
+                if (!vnode.data.keepAlive) {
+                    componentInstance.$destroy();
+                } else {
+
+                }
+            }
+        }
+    };
+
+    var hooksToMerge = Object.keys(componentVNodeHooks);
+    console.log(hooksToMerge)
+</script>
+</body>
+</html>

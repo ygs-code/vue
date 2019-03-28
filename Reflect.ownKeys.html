@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      //Reflect.ownKeys 可以读取到Object.defineProperty 定义的key， 而Object.keys 只能定义到对象的key
+      var obj = {}
+      Object.defineProperty(obj, 'method1', {
+          value: function () {
+              alert("Non enumerable property");
+          },
+          enumerable: false
+      })
+
+      console.log(Object.keys(obj))
+      // []
+      console.log(Reflect.ownKeys(obj))
+      // ["method1"]
+
+      const obj1 = {
+          id1: 42,
+          id2: 13
+      };
+      console.log(Object.keys(obj1))
+      // ['id1', 'id2']
+      console.log(Reflect.ownKeys(obj1))
+      // ['id1', 'id2']
+
+
+  </script>
+</body>
+</html>

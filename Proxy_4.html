@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      //get方法的用法，上文已经有一个例子，下面是另一个拦截读取操作的例子。
+      var person = {
+          name: "张三"
+      };
+
+      var proxy = new Proxy(person, {
+          get: function(target, property) {
+              if (property in target) {
+                  return target[property];
+              } else {
+                  throw new ReferenceError("Property \"" + property + "\" does not exist.");
+              }
+          }
+      });
+
+      proxy.name // "张三"
+      proxy.age // 抛出一个错误
+  </script>
+</body>
+</html>

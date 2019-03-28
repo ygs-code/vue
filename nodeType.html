@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<body><p id="demo">请点击按钮来获得 body 元素子节点的节点类型。</p>
+
+<button onclick="myFunction()">试一下</button>
+
+<script>
+    function myFunction()
+    {
+        var txt="";
+        var c=document.body.childNodes;
+         console.log(c)
+        for (var i=0; i<c.length; i++)
+        {
+            txt=txt + c[i].nodeType + "<br>";
+            console.log('c[i].attrsMap=')
+            console.log(c[i].attrsMap)
+        };
+        var x=document.getElementById("demo");
+        x.innerHTML=txt;
+    }
+</script>
+
+<p><b>注释：</b>元素中的空格被视作文本，而文本被视作文本节点。</p>
+
+</body>
+</html>

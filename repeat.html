@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <script>
+       var repeat = function (str, n) {
+           var res = '';
+           while (n) {
+               if (n % 2 === 1) {
+                   console.log('n % 2='+n % 2)
+                   res += str;
+
+
+               }
+               if (n > 1) {
+                   str += str;
+               }
+
+               n >>= 1;
+               console.log('=res=')
+               console.log(res)
+               console.log('n='+n)
+
+           }
+           return res
+       };
+       console.log(repeat('abcd',10));
+       var a=16;
+       //16 8
+       //15 7 相当于除2 向下取整2的倍数
+       console.log(  a >>= 1)
+   </script>
+</body>
+</html>

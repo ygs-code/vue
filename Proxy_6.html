@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      var doc = new Proxy({}, {
+          "get": function (oTarget, sKey) {
+
+              console.log('get')
+              return oTarget[sKey]
+              return Reflect.get(oTarget, sKey);
+          },
+          "set": function (oTarget, sKey, vValue) {
+              console.log('set')
+               return Reflect.set(oTarget, sKey, vValue);
+          },
+          "deleteProperty": function (oTarget, sKey) {
+
+              console.log('deleteProperty')
+
+          },
+          "enumerate": function (oTarget, sKey) {
+              console.log('enumerate')
+
+          },
+          "ownKeys": function (oTarget, sKey) {
+              console.log('ownKeys')
+
+          },
+          "has": function (oTarget, sKey) {
+              console.log('has')
+              console.log(oTarget)
+              console.log(sKey)
+              return oTarget[sKey]
+          },
+          "defineProperty": function (oTarget, sKey, oDesc) {
+              console.log('defineProperty')
+          },
+          "getOwnPropertyDescriptor": function (oTarget, sKey) {
+              console.log('getOwnPropertyDescriptor')
+          },
+      });
+      doc.a=10;
+      console.log(doc.a)
+      console.log('a' in doc)
+
+  </script>
+</body>
+</html>

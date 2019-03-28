@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var Odata={
+        data:{
+            name:'yao',
+            age:28,
+            array:[1,2,3,4,5,6,7,8,9],
+            obj:{
+                area:'guangxi',
+                work:'engineer'
+
+            }
+        }
+    }
+    var sharedPropertyDefinition = { //共享属性定义
+        enumerable: true,
+        configurable: true,
+        get: ()=>{},
+        set: ()=>{},
+    };
+    // 设置 监听 观察者, 该函数是可以让 对象中的三级key 直接冒泡到1级key中
+    //比如 name 只能在Odata.data.name 获取到数据，执行 proxy(Odata,'data','name')之后可以Odata.name 获取值
+    function proxy(target, sourceKey, key) {
+
+        sharedPropertyDefinition.get = function proxyGetter() { //设置get函数
+            return this[sourceKey][key]
+        };
+        sharedPropertyDefinition.set = function proxySetter(val) {//设置set函数
+            this[sourceKey][key] = val;
+        };
+        Object.defineProperty(target, key, sharedPropertyDefinition); //设置监听观察者
+    }
+    proxy(Odata,'data','name')
+    console.log(Odata.name)
+</script>
+</body>
+</html>

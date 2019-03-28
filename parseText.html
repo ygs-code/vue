@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+     匹配 ) 或 . 或 + 或 - 或 _ 或 $ 或 ]
+     */
+    var validDivisionCharRE = /[\w).+\-_$\]]/;
+    /*处理value 解析成正确的value，把过滤器 转换成vue 虚拟dom的解析方法函数 比如把过滤器 ' ab | c | d' 转换成 _f("d")(_f("c")(ab))
+     * 表达式中的过滤器解析 方法
+     * @param {*} exp
+     */
+    console.log(parseFilters(' ab | c | d')) //转化成 _f("d")(_f("c")(ab))
+    function parseFilters(exp) {
+        // 是否在 ''中
+        var inSingle = false;
+        // 是否在 "" 中
+        var inDouble = false;
+        // 是否在 ``
+        var inTemplateString = false;
+        //  是否在 正则 \\ 中
+        var inRegex = false;
+        // 是否在 {{ 中发现一个 culy加1 然后发现一个 } culy减1 直到culy为0 说明 { .. }闭合
+        var curly = 0;
+        // 跟{{ 一样 有一个 [ 加1 有一个 ] 减1
+        var square = 0;
+        // 跟{{ 一样 有一个 ( 加1 有一个 ) 减1
+        var paren = 0;
+        var lastFilterIndex = 0;
+        var c, prev, i, expression, filters;
+
+        for (i = 0; i < exp.length; i++) {
+            prev = c;
+            c = exp.charCodeAt(i);
+            console.log('c ='+exp[i])
+            console.log('c === 0x7C='+(c === 0x7C))
+            console.log('exp.charCodeAt(i + 1) !== 0x7C='+(exp.charCodeAt(i + 1) !== 0x7C) )
+            console.log('exp.charCodeAt(i - 1) !== 0x7C='+(exp.charCodeAt(i - 1) !== 0x7C))
+            console.log('curly='+(curly))
+            console.log('!curly='+(!curly))
+            console.log('square='+(square ))
+            console.log('!square='+(!square ))
+            console.log('!paren='+(!paren))
+            console.log('最后一个='+( c === 0x7C && // pipe
+                    exp.charCodeAt(i + 1) !== 0x7C &&
+                    exp.charCodeAt(i - 1) !== 0x7C && !curly && !square && !paren))
+
+
+            if (inSingle) {
+                //  '  \
+                if (c === 0x27 && prev !== 0x5C) {
+                    inSingle = false;
+                }
+            } else if (inDouble) {
+                // " \
+                if (c === 0x22 && prev !== 0x5C) {
+                    inDouble = false;
+                }
+            } else if (inTemplateString) {
+                //  `
+                if (c === 0x60 && prev !== 0x5C) {
+                    inTemplateString = false;
+                }
+            } else if (inRegex) {
+                // 当前在正则表达式中  /开始
+                //  / \
+                if (c === 0x2f && prev !== 0x5C) {
+                    inRegex = false;
+                }
+            } else if (
+                    // 如果在 之前不在 ' " ` / 即字符串 或者正则中
+            // 那么就判断 当前字符是否是 |
+            //  如果当前 字符为 |
+            // 且 不在 { } 对象中
+            // 且 不在 [] 数组中
+            // 且不在  () 中
+            // 那么说明此时是过滤器的一个 分界点
+
+            c === 0x7C && // |
+            exp.charCodeAt(i + 1) !== 0x7C &&
+            exp.charCodeAt(i - 1) !== 0x7C && !curly && !square && !paren
+            ) {
+
+
+                /*
+                 如果前面没有表达式那么说明这是第一个 管道符号 "|"
+                 再次遇到 | 因为前面 expression = 'message '
+                 执行  pushFilter()
+                 */
+                if (expression === undefined) {
+                    // first filter, end of expression
+                    // 过滤器表达式 就是管道符号之后开始
+                    lastFilterIndex = i + 1;
+                    // 存储过滤器的 表达式
+                    expression = exp.slice(0, i).trim(); //这里匹配如果字符串是 'ab|c' 则把ab匹配出来
+
+                    console.log(expression)
+//                    debugger
+                } else {
+                    pushFilter();
+                }
+            } else {
+                switch (c) {
+                    case 0x22:
+                        inDouble = true;
+                        break                 // 匹配"
+                    case 0x27:
+                        inSingle = true;
+                        break                // 匹配'
+                    case 0x60:
+                        inTemplateString = true;
+                        break                // 匹配`
+                    case 0x28:
+                        paren++;
+                        break                 // 匹配(
+                    case 0x29:
+                        paren--;
+                        break                 // 匹配)
+                    case 0x5B:
+                        square++;
+                        break                // 匹配[
+                    case 0x5D:
+                        square--;
+                        break                // 匹配]
+                    case 0x7B:
+                        curly++;
+                        break                 // 匹配 {
+                    case 0x7D:
+                        curly--;
+                        break                 //  匹配 }
+                    case 0x5C:
+                        break                //   匹配   \
+                    case 0x2f:
+                        break;                //   匹配   /
+
+                    case  0x7C:               //   匹配   |
+                        break;
+                }
+
+
+
+
+                if (c === 0x2f) { //  /
+                    var j = i - 1;
+                    var p = (void 0);
+                    // find first non-whitespace prev char
+                    //查找第一个非空白的prev字符
+                    for (; j >= 0; j--) {
+                        p = exp.charAt(j);
+                        if (p !== ' ') {
+                            break
+                        }
+                    }
+                    if (!p || !validDivisionCharRE.test(p)) {
+                        inRegex = true;
+                    }
+                }
+
+
+
+            }
+
+
+
+        }
+
+        if (expression === undefined) {
+            expression = exp.slice(0, i).trim();
+        } else if (lastFilterIndex !== 0) {
+            pushFilter();
+        }
+        // 获取当前过滤器的 并将其存储在filters 数组中
+        //  filters = [ 'filterA' , 'filterB']
+        function pushFilter() {
+            (filters || (filters = [])).push(exp.slice(lastFilterIndex, i).trim());
+            lastFilterIndex = i + 1;
+        }
+
+        if (filters) {
+            console.log(filters)
+            for (i = 0; i < filters.length; i++) {
+                //把过滤器封装成函数 虚拟dom需要渲染的函数
+                expression = wrapFilter(expression, filters[i]);
+            }
+        }
+        console.log(expression)
+
+        //返回值
+        return expression
+    }
+    /*
+     生成过滤器的 表达式字符串
+     如上面的
+     exp = message
+     filters = ['filterA','filterB(arg1,arg2)']
+     第一步  以exp 为入参 生成 filterA 的过滤器表达式字符串  _f("filterA")(message)
+     第二步 以第一步字符串作为入参 生成第二个过滤器的表达式字符串 _f("filterB")(_f("filterA")(message),arg1,arg2)
+     => _f("filterB")(_f("filterA")(message),arg1,arg2)
+     * @param {string} exp   上一个过滤器的值 没有就是 表达式的值
+     * @param {string} filter
+     * @returns {string}
+     */
+    console.log(wrapFilter('abc','defg(hijk)')) //结果 _f("defg")(abc,hijk)
+    function wrapFilter(exp, filter) {
+        var i = filter.indexOf('('); //返回字符串第一次出现索引的位置
+        console.log('i='+i)
+        if (i < 0) {
+            // _f: resolveFilter
+            return ("_f(\"" + filter + "\")(" + exp + ")") //闭包
+        } else {
+            //name 是 从字符串开始到(结束的字符串,不包含(
+            var name = filter.slice(0, i); //截取字符串 arrayObject.slice(start,end)
+            console.log('==name==')
+            console.log(name)
+
+            //args是从(开始匹配，到字符串末端，不包含(
+            var args = filter.slice(i + 1); //如果 end 未被规定，那么 slice() 方法会选取从 start 到数组结尾的所有元素。
+            console.log('==args==')
+            console.log(args)
+            return (
+                    "_f(\"" + name + "\")(" + exp +
+                    (
+                            args !== ')' ?
+                            ',' + args
+                                    : args
+                    )
+            )
+        }
+    }
+
+
+    var defaultTagRE = /\{\{((?:.|\n)+?)\}\}/g; //匹配viwe 视图中的{{指令}}
+    var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g; //匹配特殊符号  - 或者. 或者* 或者+ 或者? 或者^ 或者$ 或者{ 或者} 或者( 或者) 或者| 或者[ 或者] 或者/ 或者\
+
+
+    /**
+     * Create a cached version of a pure function.
+     */
+    /**
+     * Create a cached version of a pure function.
+     * 创建纯函数的缓存版本。
+     * 创建一个函数，缓存，再return 返回柯里化函数
+     * 闭包用法
+     */
+    /***********************************************************************************************
+     *函数名 ：cached
+     *函数功能描述 ： 创建纯函数的缓存版本。 创建一个函数，缓存，再return 返回柯里化函数 闭包用法
+     *函数参数 ： fn 函数
+     *函数返回值 ：    fn
+     *作者 ：
+     *函数创建日期 ：
+     *函数修改日期 ：
+     *修改人 ：
+     *修改原因 ：
+     *版本 ：
+     *历史版本 ：
+     ***********************************************************************************************/
+
+    /*
+     * var aFn =  cached(function(string){
+     *
+     *      return string
+     *  })
+     * aFn(string1);
+     * aFn(string2);
+     * aFn(string);
+     * aFn(string1);
+     * aFn(string2);
+     *
+     * aFn 函数会多次调用 里面就能体现了
+     *  用对象去缓存记录函数
+     * */
+
+    function cached(fn) {
+        var cache = Object.create(null);
+        return (function cachedFn(str) {
+            var hit = cache[str];
+            return hit || (cache[str] = fn(str))
+        })
+    }
+
+
+
+    var buildRegex = cached(function (delimiters) {
+        var open = delimiters[0].replace(regexEscapeRE, '\\$&'); //$&	与 regexp 相匹配的子串。 这里的意思是遇到了特殊符号的时候在正则里面需要替换加多一个/斜杠
+        var close = delimiters[1].replace(regexEscapeRE, '\\$&');
+        return new RegExp(open + '((?:.|\\n)+?)' + close, 'g') // 匹配开始的open +任意字符或者换行符+ close 全局匹配
+    });
+
+   //匹配view 指令，并且把他转换成 虚拟dom vonde 需要渲染的函数,比如指令{{name}}转换成 _s(name)
+    //比如字符串  我叫{{name}},今年{{age}},数据{{data.number}}个手机  转换成 我叫+_s(name)+,今年+_s(age)+,数据+_s(data.number)+个手机
+    function parseText(
+            text, //字符串
+            delimiters //被修改默认的标签匹配
+    ) {
+        var tagRE = delimiters ? buildRegex(delimiters) : defaultTagRE; // 如果delimiters不存在则 用默认指令 {{}}，如果修改成其他指令则用其他指令
+        if (!tagRE.test(text)) { //判断字符串是否含有指令
+            return
+        }
+        var tokens = [];
+        var rawTokens = [];
+        var lastIndex = tagRE.lastIndex = 0;
+        var match, index, tokenValue;
+        while ((match = tagRE.exec(text))) { //循环能匹配上的指令，全局匹配代码：的时候会有个lastIndex  执行exec方法后，lastIndex就会记录匹配的字符串在原始字符串中最后一位的索引加一，
+            console.log('match=')
+            console.log(match)
+            console.log('match.index='+match.index)
+            console.log('lastIndex='+lastIndex)
+            index = match.index; //当前匹配上的字符串位置，也可以是上一次匹配出来的位置
+            // push text token
+            if (index > lastIndex) { //
+                rawTokens.push(tokenValue = text.slice(lastIndex, index)); //截取匹配到字符串指令前面的字符串，并添加到rawTokens
+                tokens.push(JSON.stringify(tokenValue)); //添加匹配到字符串指令前面的字符串
+            }
+            // tag token
+            //处理value 解析成正确的value，把过滤器 转换成vue 虚拟dom的解析方法函数 比如把过滤器 ' ab | c | d' 转换成 _f("d")(_f("c")(ab))
+            var exp = parseFilters(match[1].trim()); //
+            tokens.push(("_s(" + exp + ")")); //把指令转义成函数，便于vonde 虚拟dom 渲染 比如指令{{name}} 转换成 _s(name)
+            rawTokens.push({'@binding': exp}); //绑定指令{{name}} 指令转换成  [{@binding: "name"}]
+            lastIndex = index + match[0].length; // 上一次匹配出来的字符串的位置+上一次字符串的长度  比如字符串   我叫{{name}},今年{{age}},数据{{data.number}}个手机  这时候lastIndex 等于10
+
+        }
+        console.log(lastIndex)
+        console.log(text.length)
+        if (lastIndex < text.length) { //拼接最后一个字符， 数据{{data.number}}个手机    把个手机 的字符串连接起来
+            rawTokens.push(tokenValue = text.slice(lastIndex)); //截取字符串。到最后一位
+            tokens.push(JSON.stringify(tokenValue)); //拼接最后一位字符串
+        }
+        return {
+            expression: tokens.join('+'), //把数组变成字符串，用加号链接 比如数组为 ['我叫','_s(name)',',今年','_s(age)',',数据','_s(data.number)','个手机']  变成   我叫+_s(name)+,今年+_s(age)+,数据+_s(data.number)+个手机
+            tokens: rawTokens
+        }
+    }
+console.log(parseText('我叫{{name}},今年{{age}},数据{{data.number}}个手机'))
+//    console.log(parseText('{{name}}这个'))
+
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+   <script>
+       //slice splice
+        var  str='abcdefg';
+       var arr = [1,2,3,4,5,6,7,8,9];
+       var arrObj = [1,2,3,{
+            name:'abc',
+            age:27
+       }];
+
+       var arrObj2 = arrObj
+       var arrObj3 =  arrObj.slice()
+
+
+
+        console.log(str.charAt(0))
+       //数组或者字符串api
+       console.log(str.slice(1))
+       console.log(arr.slice(1))
+       console.log(arr.slice())
+
+       console.log(arrObj2)
+       console.log(arrObj3)
+
+       arrObj2[3].name='bcd'
+       arrObj2[0].name='00'
+
+       console.log(arrObj)
+
+       arrObj3[3].age=28
+       arrObj3[1].age='11'
+       console.log(arrObj)
+
+
+
+       //数组 api
+//       console.log(str.splice(0))
+
+   </script>
+</body>
+</html>

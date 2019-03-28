@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    #SomeElementYouWantToAnimate{
+        width: 100px;
+        height: 100px;
+        background: red;
+    }
+</style>
+<body>
+    <div id="SomeElementYouWantToAnimate">
+
+    </div>
+  <script>
+      var start = null;
+      var element = document.getElementById('SomeElementYouWantToAnimate');
+      element.style.position = 'absolute';
+
+     /*
+      window.requestAnimationFrame() 告诉浏览器——你希望执行一个动画，
+      并且要求浏览器在下次重绘之前调用指定的回调函数更新动画。
+      该方法需要传入一个回调函数作为参数，
+      该回调函数会在浏览器下一次重绘之前执行
+      注意：若你想在浏览器下次重绘之前继续更新下一帧动画，
+      那么回调函数自身必须再次调用window.requestAnimationFrame()
+      */
+     function step(timestamp) {
+
+          console.log('step')
+          if (!start) start = timestamp;
+          var progress = timestamp - start;
+          element.style.left = Math.min(progress / 10, 200) + 'px';
+          if (progress < 2000) {
+              window.requestAnimationFrame.bind(window)(function () {
+                 window.requestAnimationFrame.bind(window)(step)
+              });
+          }
+      }
+
+      window.requestAnimationFrame(step);
+
+
+   var inBrowser=true;
+      var raf = inBrowser ?
+              (window.requestAnimationFrame ? window.requestAnimationFrame.bind(window) : setTimeout)
+              : function (fn) {
+          return fn();
+      };
+
+      //下一帧
+      function nextFrame(fn) {
+
+          raf(function () {
+              raf(fn);
+          });
+      }
+
+      nextFrame(function () {
+           console.log('nextFrame')
+      })
+  </script>
+</body>
+</html>

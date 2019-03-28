@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let set6 = new Set([1, 2, 2, 3, 4, 3, 5])
+    console.log('distinct 1:', set6)
+
+    //数组去重
+    let arr1 = [1, 2, 3, 4]
+    let arr2 = [2, 3, 4, 5, 6]
+    let set7 = new Set([...arr1, ...arr2])
+    console.log('distinct 2:', set7)
+
+    //1.向Set中添加元素。
+    let set1 = new Set()
+    set1.add(1)
+    set1.add(2)
+    set1.add(3)
+    console.log('added:', set1)
+
+
+    //3.判断某元素是否存在。
+
+    let set2 = new Set()
+    set2.add(1)
+    set2.add(2)
+    set2.add(3)
+    set2.delete(1)
+    console.log('has(1):', set2.has(1))
+    console.log('has(2):', set2.has(2))
+
+    //4.清除所有元素。
+    let set3 = new Set()
+    set3.add(1)
+    set3.add(2)
+    set3.add(3)
+    set3.clear()
+    console.log('cleared:', set3)
+
+    //数组去重
+    let arr=[1,111,33,11,11,11,34,5,6,7,4];
+    console.log( new Set([...arr]))
+    console.log([...arr])
+</script>
+</body>
+</html>

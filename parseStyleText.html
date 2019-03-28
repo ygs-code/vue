@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    /**
+     * Create a cached version of a pure function.
+     */
+    /**
+     * Create a cached version of a pure function.
+     * 创建纯函数的缓存版本。
+     * 创建一个函数，缓存，再return 返回柯里化函数
+     * 闭包用法
+     */
+    /***********************************************************************************************
+     *函数名 ：cached
+     *函数功能描述 ： 创建纯函数的缓存版本。 创建一个函数，缓存，再return 返回柯里化函数 闭包用法
+     *函数参数 ： fn 函数
+     *函数返回值 ：    fn
+     *作者 ：
+     *函数创建日期 ：
+     *函数修改日期 ：
+     *修改人 ：
+     *修改原因 ：
+     *版本 ：
+     *历史版本 ：
+     ***********************************************************************************************/
+
+    /*
+     * var aFn =  cached(function(string){
+     *
+     *      return string
+     *  })
+     * aFn(string1);
+     * aFn(string2);
+     * aFn(string);
+     * aFn(string1);
+     * aFn(string2);
+     *
+     * aFn 函数会多次调用 里面就能体现了
+     *  用对象去缓存记录函数
+     * */
+
+    function cached(fn) {
+        var cache = Object.create(null);
+        return (function cachedFn(str) {
+            var hit = cache[str];
+            return hit || (cache[str] = fn(str))
+        })
+    }
+
+    //把style 字符串 转换成对象 比如'width:100px;height:200px;' 转化成 {width:100px,height:200px}
+    var parseStyleText = cached(function (cssText) {
+        var res = {};
+        var listDelimiter = /;(?![^(]*\))/g; //匹配字符串中的 ;符号。但是不属于 (;)的 符号 如果是括号中的;不能匹配出来
+        var propertyDelimiter = /:(.+)/;  //:+任何字符串
+        console.log(cssText.split(listDelimiter))
+        debugger;
+        cssText.split(listDelimiter).forEach(function (item) {
+            if (item) {
+                var tmp = item.split(propertyDelimiter);
+                console.log(tmp)
+                debugger;
+                tmp.length > 1 && (res[tmp[0].trim()] = tmp[1].trim());
+            }
+        });
+        return res
+    });
+
+    console.log(parseStyleText('width:100px;(height:200px);'))
+
+
+
+
+</script>
+</body>
+</html>

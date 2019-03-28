@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<body>
+
+<script>
+   function Person() {
+
+   }
+   Person.prototype={
+//       mount:function(){
+//             console.log('mount')
+////            return   mount();
+//
+//
+//       }
+   }
+   var mount  =  Person.prototype.mount||()=>{};
+   Person.prototype.mount=function () {
+       mount.call(this);
+   }
+  var  _person=new Person()
+   _person.mount();
+
+</script>
+
+
+
+</body>
+</html>

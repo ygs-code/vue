@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      //then 中接受两个参数是函数的，第一个是成功的状态，
+      // 第二个是失败的状态，如果参数有第二个的时候，
+      // 则promise失败的时候则会优先走then中的第二个参数，而不是走catch
+        new Promise((resolved,rejected)=>{
+            resolved('成功')
+        }).then((data)=>{
+              console.log(data)
+        }).catch()
+
+        new Promise((resolved,rejected)=>{
+            rejected('失败')
+        }).then((data)=>{
+            console.log(data)
+        },(data)=>{
+            console.log(data)
+        }).catch(()=>{
+            console.log(data)
+        })
+
+        new Promise((resolved,rejected)=>{
+            rejected('失败')
+        }).then((data)=>{
+            console.log(data)
+        }).catch((data)=>{
+            console.log(data)
+        })
+
+      new Promise((a,b)=>{
+          a('成功')
+      }).then((data)=>{
+          console.log('a='+data)
+      }).catch()
+  </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+
+  //没有全局匹配 只会匹配到一个
+    var prohibitedKeywordRE = new RegExp('\\b' + (
+                    'do,if,for,let,new,try,var,case,else,with,await,break,catch,class,const,' +
+                    'super,throw,while,yield,delete,export,import,return,switch,default,' +
+                    'extends,finally,continue,debugger,function,arguments'
+            ).split(',').join('\\b|\\b') + '\\b');
+
+    var str = 'do else var cc if'
+
+
+
+
+
+        console.log(prohibitedKeywordRE)
+        console.log(prohibitedKeywordRE.test(str));
+        console.log(prohibitedKeywordRE.exec(str));
+        console.log(str.match(prohibitedKeywordRE));
+
+
+</script>
+</body>
+</html>

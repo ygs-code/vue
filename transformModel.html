@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <script>
+      function isDef(v) {
+          //判断数据 是否不等于 undefined或者null
+          return v !== undefined && v !== null
+      }
+
+      transformModel({
+
+      }, {
+          props:{},
+          model:{
+              value:''
+          }
+      })
+
+      function transformModel(options, data) {
+          //获取prop 如果获取不到 则取值 value
+          var prop = (options.model && options.model.prop) || 'value';
+          console.log(prop)
+
+          //获取event如果获取不到 则取值 input
+         var event = (options.model && options.model.event) || 'input';
+          console.log(event)
+          console.log(data)
+       (data.props || (data.props = {}))
+//           [prop] = data.model.value;
+//          console.log(prop)
+//          console.log(event)
+//          var on = data.on || (data.on = {});
+//          if (isDef(on[event])) {
+//              on[event] = [data.model.callback].concat(on[event]);
+//          } else {
+//              on[event] = data.model.callback;
+//          }
+//          console.log(options)
+//          console.log(data)
+      }
+  </script>
+</body>
+</html>
