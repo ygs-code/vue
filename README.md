@@ -20,7 +20,7 @@
 提取码：1fnu 
  
 
-上面的vue.js 就是我每行加有注释的vue.js, 其他文件是我看vue.js源码的时候抽出来的vue.js源码小demo
+上面的vue.js 就是我基于vue源码中每行加有注释的vue.js, 其他文件就是我看vue.js源码的时候抽出来的vue.js 源码小demo
 
  
  
