@@ -503,8 +503,8 @@
         'created',       //生命周期   结束实例化完 vue 指令
         'beforeMount',  //生命周期 开始渲染虚拟dom ，挂载event 事件 指令
         'mounted',      //生命周期  渲染虚拟dom ，挂载event 事件 完 指令
-        'beforeUpdate',  //生命周期  开始更新wiew 数据指令
-        'updated',       //生命周期  结束更新wiew 数据指令
+        'beforeUpdate',  //生命周期  开始更新 view 数据指令
+        'updated',       //生命周期  结束更新 view 数据指令
         'beforeDestroy', //生命周期  开始销毁 new 实例 指令
         'destroyed',     //生命周期  结束销毁 new 实例 指令
         'activated',   //keep-alive组件激活时调用。
