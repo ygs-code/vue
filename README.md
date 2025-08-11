@@ -19,7 +19,7 @@ vue 如何去看vue源码呢？其实mvvm源码并没有想象中那么神秘，
 
  vnode，在vue用vnode是通过 ast对象，在转义成vonde 需要渲染的函数，比如_c('div'  s(''))  等这类的函数，编译成vonde 虚拟dom。然后到updata更新数据 调用__patch__ 把vonde 通过diff算法变成正真正的dom元素。
 
-##   4.diif算法：
+##   4.diff算法：
 
 ​     vue2 的diff 算法是深度优先算法遍历，然后对比算法是通过 新旧的vnode对比先对比他们的基本属性，比如key 标签等，如果是相同则通过diff算法对比然后diff算法是新旧的vnode对比，然后有四个指针索引，两个新的vnode开始指针和新的 vnode 结束指针，两个旧的vnode开始指针和旧的 vnode 结束指针。然后先判断vnode是否为空，如果为空就往中间靠拢  开始的指针++  结束的指针 --。然后两头对比之后，在交叉对比，直到找不到相同的vnode之后如果多出的就删除，如果少的话就新增，然后对比完之后在更新到真实dom。
 
@@ -1150,7 +1150,7 @@ patchVnode 方法主要是对vnode 进行增加和删除，主要还有key更新
 
 # ddif 算法updateChildren
 
-diif算法，vue2 的diff 算法是深度优先算法遍历，然后对比算法是通过 新旧的vnode对比先对比他们的基本属性，比如key 标签等，如果是相同则通过diff算法对比然后diff算法是新旧的vnode对比，然后有四个指针索引，两个新的vnode开始指针和新的 vnode 结束指针，两个旧的vnode开始指针和旧的 vnode 结束指针。然后先判断vnode是否为空，如果为空就往中间靠拢  开始的指针++  结束的指针 --。然后两头对比之后，在交叉对比，直到找不到相同的vnode之后如果多出的就删除，如果少的话就新增，然后对比完之后 在调用patchVnode去增删虚拟dom。然后如果有vnode不相同在调用updateChildren，这样就做到深层递归，也叫深度优先搜索，然后子vnode没有了在更新到真实dom。 
+diff算法，vue2 的diff 算法是深度优先算法遍历，然后对比算法是通过 新旧的vnode对比先对比他们的基本属性，比如key 标签等，如果是相同则通过diff算法对比然后diff算法是新旧的vnode对比，然后有四个指针索引，两个新的vnode开始指针和新的 vnode 结束指针，两个旧的vnode开始指针和旧的 vnode 结束指针。然后先判断vnode是否为空，如果为空就往中间靠拢  开始的指针++  结束的指针 --。然后两头对比之后，在交叉对比，直到找不到相同的vnode之后如果多出的就删除，如果少的话就新增，然后对比完之后 在调用patchVnode去增删虚拟dom。然后如果有vnode不相同在调用updateChildren，这样就做到深层递归，也叫深度优先搜索，然后子vnode没有了在更新到真实dom。 
 
 ```
 

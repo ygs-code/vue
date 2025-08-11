@@ -22,7 +22,7 @@ vue is a dual data corresponding framework, the underlying use is Object.defineP
 
 vnode, used in vue, is via ast objects, escaped into vonde needs to render functions, such as _c('div' s('')) and such functions, compiled into vonde virtual dom. Then update the data to updata and call __patch__ to turn vonde into a true dom element through diff algorithm.
 
-##   4.diif algorithm:
+##   4.diff algorithm:
 
 ​    The diff algorithm of vue2 is depth-first traversal, and then the comparison algorithm compares the old vnode with the new vnode, first compares their basic attributes, such as key labels, etc. If they are the same, the diff algorithm compares the old Vnode with the new Vnode, and then there are four pointer indexes. Two new vnode start Pointers and two new vnode end Pointers, two old vnode start Pointers and old vnode end Pointers. Then first determine whether the vnode is empty, if it is empty, move to the center of the start pointer ++ end pointer --. Then after comparing the two sides, cross-compare until you can't find the same vnode, if there are more, delete it, if there are fewer, add it, and then update it to the real dom after comparing.
 
@@ -1151,7 +1151,7 @@ The patchVnode method is mainly used to add and delete vnodes and update key. Th
 
 # ddif algorithm updateChildren
 
-diif algorithm, the diff algorithm of vue2 is a depth-first algorithm for traversal, and then the comparison algorithm compares the old vnode with the new vnode, first compares their basic attributes, such as key labels, etc. If they are the same, the diff algorithm compares the old Vnode with the new Vnode, and then has four pointer indexes. Two new vnode start Pointers and two new vnode end Pointers, two old vnode start Pointers and old vnode end Pointers. Then first determine whether the vnode is empty, if it is empty, move to the center of the start pointer ++ end pointer --. Then, after comparing the two sides, cross-compare until the same vnode is not found. If there are more Vnodes, delete them; if there are fewer, add them. After comparing, call patchVnode to add or delete virtual dom. Then if there are Vnodes that are not the same, updateChildren is called, so deep recursion, also called depth-first search, is done, and then the child Vnodes are not updated to the real dom.
+diff algorithm, the diff algorithm of vue2 is a depth-first algorithm for traversal, and then the comparison algorithm compares the old vnode with the new vnode, first compares their basic attributes, such as key labels, etc. If they are the same, the diff algorithm compares the old Vnode with the new Vnode, and then has four pointer indexes. Two new vnode start Pointers and two new vnode end Pointers, two old vnode start Pointers and old vnode end Pointers. Then first determine whether the vnode is empty, if it is empty, move to the center of the start pointer ++ end pointer --. Then, after comparing the two sides, cross-compare until the same vnode is not found. If there are more Vnodes, delete them; if there are fewer, add them. After comparing, call patchVnode to add or delete virtual dom. Then if there are Vnodes that are not the same, updateChildren is called, so deep recursion, also called depth-first search, is done, and then the child Vnodes are not updated to the real dom.
 
 ```
 
